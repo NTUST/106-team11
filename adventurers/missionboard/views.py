@@ -12,10 +12,13 @@ def index(request):
 
     for c in categories:
         c.style = 'style%s' % str(random.randrange(1, 6))
-        c.img = 'images/pic%s.jpg' % str(random.randrange(1, 6)).zfill(2)
+        c.img = 'images/pic%s.jpg' % str(random.randrange(1, 13)).zfill(2)
 
-    context = {'category': categories}
+    context = {'categories': categories}
     return render(request, 'index.html', context)
 
 def aboutus(request):
     return render(request, 'aboutus.html')
+
+def donate(request):
+    return render(request, 'donate.html')
