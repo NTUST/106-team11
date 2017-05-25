@@ -16,3 +16,6 @@ def index(request):
 
     context = {'category': categories}
     return render(request, 'index.html', context)
+
+def aboutus(request):
+    return render(request, 'aboutus.html')

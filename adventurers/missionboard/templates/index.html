@@ -1,125 +1,31 @@
+{% extends "layout/base.html" %}
 {% load static %}
-<!DOCTYPE HTML>
-<!--
-	Phantom by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>初心者公會</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="{% static "assets/css/main.css" %}" />
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-	</head>
-	<body>
-		<!-- Wrapper -->
-			<div id="wrapper">
 
-				<!-- Header -->
-					<header id="header">
-						<div class="inner">
-
-							<!-- Logo -->
-								<a href="{% url 'missionboard_index' %}" class="logo">
-									<span class="symbol"><img src="{% static "images/logo.svg" %}" alt="" /></span><span class="title">初心者公會</span>
-								</a>
-
-							<!-- Nav -->
-								<nav>
-									<ul>
-										<li><a href="#menu">Menu</a></li>
-									</ul>
-								</nav>
-
-						</div>
-					</header>
-
-				<!-- Menu -->
-					<nav id="menu">
-						<h2>Menu</h2>
-						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li><a href="signin.html">Sign in</a></li>
-							<li><a href="aboutus.html">About us</a></li>
-							<li><a href="donate.html">Donate</a></li>
-						</ul>
-					</nav>
-
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
-							<header>
-								<h1>這是一個給新手練習的場地</h1>
-								<p class="introduction gray 7u(xlarge) 7u(large)">
-								在玩RPG遊戲的時候，覺得冒險者公會很酷，就想做出來。<br>我們想給新手們練習的場地，也給需求不高的雇主一個大平台，<br>還有一個很最主要的原因就是：其他外包網很醜。
-								</p>
-							</header>
-							<section class="tiles">
-								{% for c in category %}
-								<article class={{c.style}}>
-									<span class="image">
-										<img src="{% static c.img %}" alt="" />
-									</span>
-									<a href="form.html">
-										<h2>{{c.name}}</h2>
-										<div class="content">
-											<p>{{c.description}}</p>
-										</div>
-									</a>
-								</article>
-								{% endfor %}
-
-							</section>
-						</div>
+{% block content %}
+<div id="main">
+	<div class="inner">
+		<header>
+			<h1>這是一個給新手練習的場地</h1>
+			<p class="introduction gray 7u(xlarge) 7u(large)">
+			在玩RPG遊戲的時候，覺得冒險者公會很酷，就想做出來。<br>我們想給新手們練習的場地，也給需求不高的雇主一個大平台，<br>還有一個很最主要的原因就是：其他外包網很醜。
+			</p>
+		</header>
+		<section class="tiles">
+			{% for c in category %}
+			<article class={{c.style}}>
+				<span class="image">
+					<img src="{% static c.img %}" alt="" />
+				</span>
+				<a href="form.html">
+					<h2>{{c.name}}</h2>
+					<div class="content">
+						<p>{{c.description}}</p>
 					</div>
+				</a>
+			</article>
+			{% endfor %}
 
-				<!-- Footer -->
-					<footer id="footer">
-						<div class="inner">
-							<section>
-								<h2>Get in touch</h2>
-								<form method="post" action="#">
-									<div class="field half first">
-										<input type="text" name="name" id="name" placeholder="Name" />
-									</div>
-									<div class="field half">
-										<input type="email" name="email" id="email" placeholder="Email" />
-									</div>
-									<div class="field">
-										<textarea name="message" id="message" placeholder="Message"></textarea>
-									</div>
-									<ul class="actions">
-										<li><input type="submit" value="Send" class="special" /></li>
-									</ul>
-								</form>
-							</section>
-							<section>
-								<h2>Follow</h2>
-								<ul class="icons">
-									<li><a href="#" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
-									<li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
-									<li><a href="#" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
-									<li><a href="#" class="icon style2 fa-dribbble"><span class="label">Dribbble</span></a></li>
-									<li><a href="#" class="icon style2 fa-github"><span class="label">GitHub</span></a></li>
-									<li><a href="#" class="icon style2 fa-500px"><span class="label">500px</span></a></li>
-									<li><a href="#" class="icon style2 fa-phone"><span class="label">Phone</span></a></li>
-									<li><a href="#" class="icon style2 fa-envelope-o"><span class="label">Email</span></a></li>
-								</ul>
-							</section>
-						</div>
-					</footer>
-			</div>
-
-		<!-- Scripts -->
-			<script src="{% static "assets/js/jquery.min.js" %}"></script>
-			<script src="{% static "assets/js/skel.min.js" %}"></script>
-			<script src="{% static "assets/js/util.js" %}"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="{% static "assets/js/main.js" %}"></script>
-
-	</body>
-</html>
+		</section>
+	</div>
+</div>
+{% endblock %}
