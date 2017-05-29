@@ -6,7 +6,6 @@ import random
 # nt_category = namedtuple('Category', 'name, description')
 
 
-
 def index(request):
     categories = Category.objects.all()
 

@@ -4,21 +4,27 @@
 {% block content %}
 <div id="main">
   <div class="inner row">
-    <section class="5u$ 12u(medium) byellow">
-      <h1>Sign in</h1>
+    <section class="5u 12u(medium) bgray">
+      <h1>Register</h1>
       <form method="post">
         {% csrf_token %}
         <div class="field ">
           {{form.name}}
         </div>
         <div class="field">
+          {{form.email}}
+        </div>
+        <div class="field">
           {{form.password}}
+        </div>
+        <div class="field">
+          {{form.password2}}
         </div>
         <ul class="actions">
           <li><input type="submit" value="Send" class="special" /></li>
         </ul>
       </form>
-      <p><a href="{% url 'missionboard_register' %}">Register</a></p>
+      <p><a href={% url 'missionboard_signin' %}>Sign in</a></p>
     </section>
   </div>
 </div>
