@@ -2,14 +2,18 @@
 <header id="header">
   <div class="inner">
 
-    <!-- Logo -->
+   <!-- Logo -->
       <a href="{% url 'missionboard_index' %}" class="logo">
-        <span class="symbol"><img src="{% static "images/logo.svg" %}" alt="" /></span><span class="title">初心者公會</span>
+        <span class="symbol"><img src="{% static "images/logo.svg" %}" alt="" /></span>
+        <span class="title">初心者公會</span>
       </a>
 
     <!-- Nav -->
       <nav>
         <ul>
+          {% if u %}
+          <li><strong>{{u.username}}</strong></li>
+          {% endif %}
           <li><a href="#menu">Menu</a></li>
         </ul>
       </nav>

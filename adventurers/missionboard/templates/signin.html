@@ -10,9 +10,15 @@
         {% csrf_token %}
         <div class="field ">
           {{form.name}}
+          {% if form.name.errors %}
+          <b style="color: red;">{{ form.name.errors }}</b>
+          {% endif %}
         </div>
         <div class="field">
           {{form.password}}
+          {% if form.password.errors %}
+          <b style="color: red;">{{ form.password.errors }}</b>
+          {% endif %}
         </div>
         <ul class="actions">
           <li><input type="submit" value="Send" class="special" /></li>
