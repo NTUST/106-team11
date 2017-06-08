@@ -135,7 +135,7 @@ STATICFILES_DIRS = [
 ]
 
 # 使用UserenaProfile
-AUTH_PROFILE_MODULE = 'accounts.MyProfile'
+AUTH_PROFILE_MODULE = 'accounts.Member'
 # 設定預設的登入登出URL, 有別於Django預設的"/accounts/profile/", "/accounts/login/", "/accounts/logout/".
 LOGIN_REDIRECT_URL = '/accounts/%(username)s/'
 LOGIN_URL = '/accounts/signin/'
