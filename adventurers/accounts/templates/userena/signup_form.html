@@ -1,0 +1,36 @@
+{% extends 'layout/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+<div id="main">
+  <div class="inner row">
+    <section class="5u 12u(medium) bgray">
+    <h1>Sign up</h1>
+<form action="" method="post">
+  {% csrf_token %}
+  <fieldset>
+    {{ form.non_field_errors }}
+    {% for field in form %}
+    {{ field.errors }}
+    {# Displaying checkboxes differently #}
+    {% if field.name == 'tos' %}
+    <p class="checkbox">
+    <label for="id_{{ field.name }}">{{ field }} {{ field.label }}</label>
+    </p>
+    {% else %}
+    <p>
+    {{ field.label_tag }} 
+    {{ field }}
+    </p>
+    {% endif %}
+    {% endfor %}
+  </fieldset>
+<br>
+  <input type="submit" value="{% trans "Signup"%}" />
+</form>
+</section>
+</div>
+</div>
+{% endblock %}

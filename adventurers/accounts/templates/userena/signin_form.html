@@ -1,0 +1,44 @@
+{% extends 'layout/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Signin" %}{% endblock %}
+
+{% block content %}
+<div id="main">
+  <div class="inner row">
+    <section class="5u 12u(medium) bgray">
+    <h1>Sign in</h1>
+<form action="" method="post">
+  {% csrf_token %}
+  <fieldset>
+    {{ form.non_field_errors }}
+    {% for field in form %}
+    {{ field.errors }}
+    {# Displaying checkboxes differently #}
+    {% if field.name == 'remember_me' %}
+    <div class="6u 12u$(small)">
+    {{ field }}
+    <label for="id_{{ field.name }}">{{ field.label }}</label>
+    </p>
+    {% else %}
+    <p>
+    {{ field.label_tag }}
+
+    {{ field }}
+    </p>
+    {% endif %}
+    {% endfor %}
+  </fieldset>
+  <input type="submit" value="{% trans "Signin" %}" />
+<br>
+  <p class="forgot-password"><a href="{% url 'userena_password_reset' %}" title="{% trans 'Forgot your password?' %}">{% trans "Forgot your password?" %}</a></p>
+  {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
+</form>
+</section>
+</div>
+</div>
+<div class="6u 12u$(small)">
+<input type="checkbox" id="demo-copy" name="demo-copy">
+<label for="demo-copy">Email me a copy</label>
+</div>
+{% endblock %}

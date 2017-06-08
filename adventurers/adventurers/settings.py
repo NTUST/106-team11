@@ -38,6 +38,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'accounts',
+    'userena',
+    'guardian',
+    'easy_thumbnails'
+]
+
+AUTHENTICATION_BACKENDS = [
+    'userena.backends.UserenaAuthenticationBackend',
+    'guardian.backends.ObjectPermissionBackend',
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 MIDDLEWARE = [
@@ -122,3 +133,22 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+# 使用UserenaProfile
+AUTH_PROFILE_MODULE = 'accounts.MyProfile'
+# 設定預設的登入登出URL, 有別於Django預設的"/accounts/profile/", "/accounts/login/", "/accounts/logout/".
+LOGIN_REDIRECT_URL = '/accounts/%(username)s/'
+LOGIN_URL = '/accounts/signin/'
+LOGOUT_URL = '/accounts/signout/'
+
+# 設定暱名使用者ID為-1 (Userena建議值)
+ANONYMOUS_USER_ID = -1
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# dummy for testing purpose
+# EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'a26411277@gmail.com'
+EMAIL_HOST_PASSWORD = 'django_project'
