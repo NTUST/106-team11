@@ -1,0 +1,14 @@
+<style>
+  .casebox
+  {
+    border-width: 3px;
+    border-radius: 50px;
+    border-color:rgba(160,160,160,0.1);
+    margin:20px;
+    margin-left:
+  }
+  .casebox > label
+  {
+    font-size: 25px;
+  }
+</style>
