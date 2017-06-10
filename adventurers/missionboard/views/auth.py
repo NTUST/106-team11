@@ -24,6 +24,7 @@ def signin(request):
         else:
             return render(request, 'signin.html', {'form': form})
 
+
 @login_required
 def signout(request):
     logout(request)
