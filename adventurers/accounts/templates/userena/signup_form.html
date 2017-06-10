@@ -11,9 +11,7 @@
       <form method="post">
         {% csrf_token %}
         <fieldset>
-          {{ form.non_field_errors }}
           {% for field in form %}
-          {{ field.errors }}
           {# Displaying checkboxes differently #}
           {% if field.name == 'tos' %}
           <p class="checkbox">
@@ -23,9 +21,13 @@
           <p>
           {{ field.label_tag }}
           {{ field }}
+          {% if field.errors %}
+          <b style="color: red;">{{ field.errors }}</b>
+          {% endif %}
           </p>
           {% endif %}
           {% endfor %}
+          {{ form.non_field_errors }}
         </fieldset>
         <br>
         <input type="submit" value="{% trans "Signup"%}" />
