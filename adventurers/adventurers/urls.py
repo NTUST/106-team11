@@ -19,7 +19,7 @@ from . import views as project_views
 
 urlpatterns = [
     url(r'^missionboard/', include('missionboard.urls')),
-    url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('userena.urls')),
+    url(r'^admin/', admin.site.urls),    
     url(r'^$', project_views.index),
 ]

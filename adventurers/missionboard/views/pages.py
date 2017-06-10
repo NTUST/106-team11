@@ -24,3 +24,10 @@ def aboutus(request):
 
 def donate(request):
     return render(request, 'donate.html')
+
+def case(request):
+    if request.method == 'GET':
+        return render(request, 'CaseView.html')
+    else:
+        print("WTF?")
+        return redirect('missionboard_index')

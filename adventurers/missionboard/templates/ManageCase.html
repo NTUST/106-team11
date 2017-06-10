@@ -1,96 +1,103 @@
 {% extends "layout/base.html" %}
 {% load static %}
+
+
 {% block HeaderScript %}
 	<link rel="stylesheet" href="{% static "assets/css/jquery.dataTables.min.css" %}" />
 {% endblock %}
-{% block content %}
-					<div class="inner">
-						<div class="inner"><h1>Manage your case</h1></div>
-						<div class="inner">
-							<table id="mainTable" class="display" cellspacing="0" width="100%">
-								<thead>
-						            <tr>
-						                <th>案名</th>
-						                <th>需求技能</th>
-						                <th>投案日</th>
-						                <th>接案日</th>
-						            </tr>
-						        </thead>
-						        <tbody>
-						        <!-- 以下都為測試資料可以刪掉 -->
-						            <tr>
-						                <td><a href="" title="">掃地</a></td>
-						                <td>手兒</td>
-						                <td>2017/6/7</td>
-						                <td>2017/6/8</td>
-						            </tr>
-						             <tr>
-						                <td><a href="" title="">掃地</a></td>
-						                <td>手兒</td>
-						                <td>2017/6/7</td>
-						                <td>2017/6/7</td>
-						            </tr>
-						             <tr>
-						                <td><a href="" title="">掃地</a></td>
-						                <td>手兒</td>
-						                <td>2017/6/7</td>
-						                <td>2017/6/8</td>
-						            </tr>
-						             <tr>
-						                <td><a href="" title="">掃地</a></td>
-						                <td>手兒</td>
-						                <td>2017/6/7</td>
-						                <td>2017/6/8</td>
-						            </tr>
-						             <tr>
-						                <td><a href="" title="">掃地</a></td>
-						                <td>手兒</td>
-						                <td>2017/6/7</td>
-						                <td>2017/6/8</td>
-						            </tr>
-						             <tr>
-						                <td><a href="" title="">掃地</a></td>
-						                <td>手兒</td>
-						                <td>2017/6/7</td>
-						                <td>2017/6/8</td>
-						            </tr>
-						             <tr>
-						                <td><a href="" title="">掃地</a></td>
-						                <td>手兒</td>
-						                <td>2017/6/7</td>
-						                <td>2017/6/8</td>
-						            </tr>
 
-						             <tr>
-						                <td><a href="" title="">掃地</a></td>
-						                <td>手兒</td>
-						                <td>2017/6/7</td>
-						                <td>2017/6/8</td>
-						            </tr>
-						             <tr>
-						                <td><a href="" title="">掃地</a></td>
-						                <td>手兒</td>
-						                <td>2017/6/7</td>
-						                <td>2017/6/8</td>
-						            </tr>
-						             <tr>
-						                <td><a href="" title="">掃地</a></td>
-						                <td>手兒</td>
-						                <td>2017/6/7</td>
-						                <td>2017/6/8</td>
-						            </tr>
-						             <tr>
-						                <td><a href="" title="">掃地</a></td>
-						                <td>手兒</td>
-						                <td>2017/6/7</td>
-						                <td>2017/6/8</td>
-						            </tr>
-						        </tbody>
-						    </table>
-						</div>
-					</div>
-			</div>
+
+{% block content %}
+<div class="inner">
+	<div class="inner">
+		<h1>Manage your case</h1></div>
+	<div class="inner">
+		<table id="mainTable" class="display" cellspacing="0" width="100%">
+			<thead>
+				<tr>
+					<th>案名</th>
+					<th>需求技能</th>
+					<th>投案日</th>
+					<th>接案日</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- 以下都為測試資料可以刪掉 -->
+				<tr>
+					<td><a href="" title="">掃地</a></td>
+					<td>手兒</td>
+					<td>2017/6/7</td>
+					<td>2017/6/8</td>
+				</tr>
+				<tr>
+					<td><a href="" title="">掃地</a></td>
+					<td>手兒</td>
+					<td>2017/6/7</td>
+					<td>2017/6/7</td>
+				</tr>
+				<tr>
+					<td><a href="" title="">掃地</a></td>
+					<td>手兒</td>
+					<td>2017/6/7</td>
+					<td>2017/6/8</td>
+				</tr>
+				<tr>
+					<td><a href="" title="">掃地</a></td>
+					<td>手兒</td>
+					<td>2017/6/7</td>
+					<td>2017/6/8</td>
+				</tr>
+				<tr>
+					<td><a href="" title="">掃地</a></td>
+					<td>手兒</td>
+					<td>2017/6/7</td>
+					<td>2017/6/8</td>
+				</tr>
+				<tr>
+					<td><a href="" title="">掃地</a></td>
+					<td>手兒</td>
+					<td>2017/6/7</td>
+					<td>2017/6/8</td>
+				</tr>
+				<tr>
+					<td><a href="" title="">掃地</a></td>
+					<td>手兒</td>
+					<td>2017/6/7</td>
+					<td>2017/6/8</td>
+				</tr>
+
+				<tr>
+					<td><a href="" title="">掃地</a></td>
+					<td>手兒</td>
+					<td>2017/6/7</td>
+					<td>2017/6/8</td>
+				</tr>
+				<tr>
+					<td><a href="" title="">掃地</a></td>
+					<td>手兒</td>
+					<td>2017/6/7</td>
+					<td>2017/6/8</td>
+				</tr>
+				<tr>
+					<td><a href="" title="">掃地</a></td>
+					<td>手兒</td>
+					<td>2017/6/7</td>
+					<td>2017/6/8</td>
+				</tr>
+				<tr>
+					<td><a href="" title="">掃地</a></td>
+					<td>手兒</td>
+					<td>2017/6/7</td>
+					<td>2017/6/8</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+</div>
 {% endblock %}
+
+
 {% block FooterScript %}
-			<script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script>
 {% endblock %}
