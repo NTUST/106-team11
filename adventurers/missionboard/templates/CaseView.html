@@ -17,17 +17,21 @@
 		<h1>Case information</h1>
 		<!-- 內容 -->
 		<div class="casebox box">
-			<label for="">案名:</label>
-			<label for="">需求技能:</label>
-			<label for="">等級下限:</label>
-			<label for="">投案日:</label>
+			<label for="">案名: {{ mission.name }}</label>
+			<label for="">需求技能: {{ mission.required_skills.all | join:', ' }} </label>
+			<label for="">等級下限: {{ mission.required_level }}</label>
+			<label for="">投案日: {{ mission.posted_on}} </label>
+			{% if user.is_authenticated %}
 			<label for="">接案日:</label>
-			<label for="">描述:</label><p>邊他人和化利：案再邊在機代；的會家特開總眼，接起立然得興心英離到，快造談布放，看我面原治把種然師上教甚未我方我，不名金來現投進、運說可力來……定片的到深。間多夫事家現；紀說高不下費光要素主真影期，學有現著發知里得對我叫士如產了庭老雄臺意只由平眼，保列酒電市會所因：見了內送會一如，個因目小速臉特。旅沒今，色員轉度起！本廣議、小說先一別服學隨土；視長要上線任理也公……風使由人走……地人們好不都品效自科巴立正生則樹年心運動又性公到眼重最一重但上頭太！北告陸於需面爸告上來格裡示須收外水該。許出而夫間分個四利國，親天灣生母拿開首到？海重由的型二……面不然最本心條形生格自直有際，些見加自見活子？美辦影活！已的電媽不關起。配愛最子；大兒英子；子克部像記學是事。年進造春常、道會從作劇不物依你也商，轉合破經感的香天許政天保朋，今義病能家必室；家定兒，人種分經常明元樓多發獨總口的答不傳問名的好臺約木了些名一臺。<p>
+			{% endif %}
+			<label for="">描述:</label><p>{{ mission.description }}<p>
 		</div>
 		<!-- 關於人的內容 -->
 		<div class="casebox box">
+			{% if user.is_authenticated and user == mission.posted_by %}
 			<label for="">接案人:</label>
-			<label for="">投案人:</label>
+			{% endif %}
+			<label for="">投案人: {{ mission.posted_by.username }} </label>
 			<label for="">人數需求:</label>
 			<label for="">接案時間:</label>
 			<label for="">是否完成:</label>

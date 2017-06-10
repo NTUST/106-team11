@@ -8,4 +8,7 @@ python manage.py makemigrations
 python manage.py migrate
 
 python gen_data.py
+
+python manage.py createsuperuser --email=admin@test.local
+python manage.py runserver
 exit 0

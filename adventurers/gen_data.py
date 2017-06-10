@@ -14,8 +14,9 @@ fake = Factory.create()
 
 def main():
     gen_skills()
-    gen_missions(50)
     gen_users(10)
+    gen_missions(50)
+
 
 
     print('\nDone!')
@@ -23,7 +24,9 @@ def main():
 
 def gen_users(num):
     for n in range(0, num):
-        u = User.objects.create(username=fake.name().replace(' ','_').lower())
+        name = fake.name().replace(' ','_').lower()
+        u = User.objects.create(username=name,
+                                email='{}@random_gen.test.local'.format(name))
         u.set_password('P@ssw0rd')
         u.save()
 
@@ -35,6 +38,9 @@ def gen_users(num):
         for x in range(1, random.randint(1,3)):
             skill_list.append(Skill.objects.random_pick())
         m.skills.set(skill_list)
+        m.missions_wip.set([])
+        m.missions_completed.set([])
+        m.missions_failed.set([])
         m.save()
 
 

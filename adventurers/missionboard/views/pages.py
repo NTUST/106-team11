@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from missionboard.models import Mission, Skill
 
 import random
@@ -7,7 +7,7 @@ import random
 
 
 def index(request):
-    skills = Skill.objects.all()
+    skills = Skill.objects.all().order_by('name')
 
     for c in skills:
         c.style = 'style%s' % str(random.randrange(1, 6))
