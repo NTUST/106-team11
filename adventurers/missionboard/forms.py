@@ -2,13 +2,52 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
+from missionboard.models import Skill
+
+
+class NewMissionForm(forms.Form):
+    name = forms.CharField(
+        max_length=100,
+        label='任務名稱',
+    )
+
+    required_skills = forms.ModelMultipleChoiceField(
+        queryset=Skill.objects.all(),
+        widget=forms.CheckboxSelectMultiple()
+    )
+
+    required_level = forms.IntegerField(
+        label='等級需求',
+        min_value=0,
+        widget=forms.NumberInput(attrs={
+            'class': 'align-center'
+        })
+    )
+
+    application_deadline = forms.DateTimeField(
+        label='截止報名日期',
+        widget=forms.TextInput(attrs={
+            'class': 'align-center'
+        })
+    )
+
+    description = forms.CharField(
+        label='任務內容',
+        widget=forms.Textarea(attrs={
+            'class': 'box',
+            'rows': 5,
+            'style': 'overflow: hidden; resize: none;',
+        })
+    )
+
 
 class RegisterForm(forms.Form):
     name = forms.CharField(
         max_length=100,
         label='Name',
         widget=forms.TextInput(attrs={
-            'placeholder': 'Name'})
+            'placeholder': 'Name'
+        })
     )
 
     email = forms.CharField(
@@ -16,7 +55,8 @@ class RegisterForm(forms.Form):
         label='Email',
         widget=forms.TextInput(attrs={
             'placeholder': 'Email',
-            'type': 'email'})
+            'type': 'email'
+        })
     )
 
     password = forms.CharField(
@@ -24,7 +64,8 @@ class RegisterForm(forms.Form):
         label='Password',
         widget=forms.TextInput(attrs={
             'placeholder': 'Password',
-            'type': 'password'})
+            'type': 'password'
+        })
     )
 
     password2 = forms.CharField(
@@ -32,7 +73,8 @@ class RegisterForm(forms.Form):
         label='Password',
         widget=forms.TextInput(attrs={
             'placeholder': 'Confirm Password',
-            'type': 'password'})
+            'type': 'password'
+        })
     )
 
     def clean(self):
@@ -68,7 +110,8 @@ class SigninForm(forms.Form):
         max_length=100,
         label='Name',
         widget=forms.TextInput(attrs={
-            'placeholder': 'Name'})
+            'placeholder': 'Name'
+        })
     )
 
     password = forms.CharField(
@@ -76,7 +119,8 @@ class SigninForm(forms.Form):
         label='Password',
         widget=forms.TextInput(attrs={
             'placeholder': 'Password',
-            'type': 'password'})
+            'type': 'password'
+        })
     )
 
     def clean(self):

@@ -1,0 +1,87 @@
+{% extends "layout/base.html" %}
+{% load static %}
+
+{% block HeaderScript %}
+<style>
+	.casebox
+	{
+		border-width: 3px;
+		border-radius: 50px;
+		border-color:rgba(160,160,160,0.1);
+		margin:20px;
+		margin-left:
+	}
+	.casebox > label
+	{
+		font-size: 25px;
+	}
+	.mission_check > div
+	{
+		margin:10px;
+	}
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div id="main">
+	<div class="inner">
+		<h1>發表新任務</h1>
+		<div>
+			<!-- 內容 -->
+			<div class="casebox box">
+				<form method="post">
+					{% csrf_token %}
+					<!-- mission_name -->
+					<p>任務名稱: {{form.name}}</p>
+
+					<!-- checkbox  -->
+					<p>技能需求:</p>
+					<div class="12u 12u$(small) row mission_check">
+						{% for c in form.required_skills %}
+						<div class="3u">
+							{{c.tag}}
+							<label for={{c.id_for_label}}>{{c.choice_label}}</label>
+						</div>
+						{% endfor %}
+					</div><br>
+
+					<!-- level -->
+					<p>等級需求 : {{form.required_level}}</p>
+
+					<!-- datepicker -->
+					<p class="2u 12u(small)">截止日:
+						{{form.application_deadline}}						
+					</p>
+
+					<!-- mission_content -->
+					<p>任務內容:
+						{{form.description}}
+					</p>
+
+					<br>
+
+					<ul class="actions align-center">
+						<li><input type="submit" class="button special"></li>
+					</ul>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+
+{% block FooterScript %}
+<link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+<link href="{% static "assets/css/jquery.simple-dtpicker.css" %}" rel="stylesheet">
+
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script src="{% static "assets/js/jquery.simple-dtpicker.js" %}"></script>
+<script>
+$(function(){
+	$('#{{form.application_deadline.id_for_label}}').appendDtpicker();
+});
+</script>
+{% endblock %}

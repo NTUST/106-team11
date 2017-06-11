@@ -1,0 +1,51 @@
+				<!-- Main -->
+{% extends "layout/base.html" %}
+{% load static %}
+
+{% block content %}
+<div id="main">
+	<div class="inner">
+		<div class="inner">
+			<h1>{{category.name}}任務表</h1>
+		</div>
+		<div class="inner">
+			<table id="missions" class="display" cellspacing="0" width="100%">
+				<thead>
+					<tr>
+						<th>任務名稱</th>
+						<th>等級需求</th>
+						<th>需求技能</th>
+						<th>投案日</th>
+						<th>投案人</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- 以下都為測試資料可以刪掉 -->
+					{% for m in missions %}
+					<tr>
+						<td><a href="{% url "missionboard_details" m.id %}" title="">{{m.name}}</a></td>
+						<td>{{m.required_level}}</td>
+						<td>
+						{% for s in m.required_skills.all  %}
+						<a href="{% url 'missionboard_category' s.id %}">{{s.name}}</a>　
+						{% endfor %}
+						</td>
+						<td>{{m.posted_on}}</td>
+						<td>{{m.posted_by.username}}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block FooterScript %}
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script>
+	$(document).ready(function() {
+			$('#missions').DataTable();
+	} );
+</script>
+{% endblock %}

@@ -17,7 +17,7 @@
 				<span class="image">
 					<img src="{% static c.img %}" alt="" />
 				</span>
-				<a href="form.html">
+				<a href="{% url 'missionboard_category' c.id %}">
 					<h2>{{c.name}}</h2>
 					<div class="content">
 						<p>{{c.description}}</p>
