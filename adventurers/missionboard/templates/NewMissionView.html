@@ -51,11 +51,11 @@
 
 					<!-- datepicker -->
 					<p class="2u 12u(small)">截止日:
-						{{form.application_deadline}}
+						{{form.application_deadline}}						
 					</p>
 
 					<!-- mission_content -->
-					<p>任務內容:						
+					<p>任務內容:
 						{{form.description}}
 					</p>
 
@@ -74,17 +74,14 @@
 
 {% block FooterScript %}
 <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
-<link href="{% static "assets/css/jquery-ui-timepicker-addon.css" %}" rel="stylesheet">
+<link href="{% static "assets/css/jquery.simple-dtpicker.css" %}" rel="stylesheet">
 
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-<script src="{% static "assets/js/jquery-ui-timepicker-addon.js" %}"></script>
+<script src="{% static "assets/js/jquery.simple-dtpicker.js" %}"></script>
 <script>
-$( function() {
-	$( "#{{form.application_deadline.id_for_label}}" ).datetimepicker({
-		"dateFormat": "yy-mm-dd",
-    "timeFormat": "HH:mm"
-	});
+$(function(){
+	$('#{{form.application_deadline.id_for_label}}').appendDtpicker();
 });
 </script>
 {% endblock %}
