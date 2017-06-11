@@ -1,0 +1,167 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>標案viwe</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+		<script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+		<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+      
+      <!-- Javascript -->
+      <script>
+         $(function() {
+            $( "#datepicker" ).datepicker();
+         });
+      </script>
+		<style>
+			.casebox
+			{
+				border-width: 3px;
+				border-radius: 50px;
+				border-color:rgba(160,160,160,0.1);
+				margin:20px;
+				margin-left:
+			}
+			.casebox > label
+			{
+				font-size: 25px;
+			}
+			.mission_check > div
+			{
+				margin:10px;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="index.html" class="logo">
+									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">初心者公會</span>
+								</a>
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<!-- menu我沒打 -->
+						</ul>
+					</nav>
+				<!-- Main -->
+					<div class="inner">
+						<div class="inner"><h1>標案view</h1><div>
+						<!-- 內容 -->
+						<div class="casebox box">
+							<br>
+							<form action="">
+							<!-- mission_name -->
+							<p>任務名稱: <input type = "text"></p>
+
+							<!-- checkbox  -->
+							<p>技能需求:</p>
+							<div class="12u 12u$(small) row mission_check">
+								<div class="3u">
+								<input type="checkbox" id="skill1">
+								<label for="skill1" for="skill1">ANDROID</label>
+								</div>
+								<div class="3u">
+								<input type="checkbox" id="skill2">
+								<label for="skill2">IOS</label>
+								</div>
+								<div class="3u">
+								<input type="checkbox" id="skill3" >
+								<label for="skill3">JAVA</label>
+								</div>
+								<div class="3u">
+								<input type="checkbox" id="skill4" >
+								<label for="skill4">PYTHON</label>
+								</div>
+								<div class="3u">
+								<input type="checkbox" id="skill5" >
+								<label for="skill5">WEB DESIGN</label>
+								</div>
+								<div class="3u">
+								<input type="checkbox" id="skill6" >
+								<label for="skill6">C</label>
+								</div>
+								<div class="3u">
+								<input type="checkbox" id="skill7" >
+								<label for="skill7">C++</label>
+								</div>
+								<div class="3u">
+								<input type="checkbox" id="skill8" >
+								<label for="skill8">C#</label>
+								</div>
+								<div class="3u">
+								<input type="checkbox" id="skill9" >
+								<label for="skill9">VB</label>
+								</div>
+								<div class="3u">
+								<input type="checkbox" id="skill10" >
+								<label for="skill10">RUBY</label>
+								</div>
+								<div class="3u">
+								<input type="checkbox" id="skill11" >
+								<label for="skill11">Graphic Design</label>
+								</div>
+								<div class="3u">
+								<input type="checkbox" id="skill12" >
+								<label for="skill12">Photography</label>
+								</div>
+							</div><br>
+
+							<!-- level -->
+							<p>等級需求 : <input class="align-center" type = "number" value="1" ></p>
+
+							<!-- datepicker -->
+							<p class="2u 12u(small)">截止日: 
+							<input class="align-center" type = "text" id = "datepicker" ></p>
+
+							<!-- mission_content -->
+							<p>任務內容:
+								<textarea  class="box" rows="5" style="overflow: hidden; resize: none; font-size:25px"></textarea>				
+							</p><br>
+						</form>
+						</div>
+					
+						<!-- button -->
+						<ul class="actions align-center">
+							<li><a href="#" class="button special">提交</a></li>
+						</ul>
+			</div>
+
+		<!-- Scripts -->
+			<!-- <script src="assets/js/jquery.min.js"></script> -->
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

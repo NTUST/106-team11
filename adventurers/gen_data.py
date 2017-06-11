@@ -48,8 +48,9 @@ def gen_users(num):
 
 
 def gen_skills():
-    skill_list=['Python', 'JavaScript', 'C', 'C++',
-                'C#', 'Android', 'iOS', 'Visual Basic', 'Java']
+    skill_list=['Python', 'JavaScript', 'C', 'C++', 'C#',
+                'Android', 'iOS', 'Visual Basic', 'Java',
+                'Web Design', 'Ruby', 'Graphic Design', 'Photography']
     for s in skill_list:
         skill=Skill.objects.create(name=s, description='{} 是個好程式'.format(s))
     print("{} skills generated and committed to DB.".format(Skill.objects.count()))
