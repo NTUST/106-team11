@@ -1,12 +1,15 @@
 {% extends 'layout/base.html' %}
 {% load i18n %}
-
+{% load static %}
 {% block title %}{% trans "Signup" %}{% endblock %}
-
+{% block HeaderScript %}
+<link rel="stylesheet" href="{% static "assets/css/jquery.popSelect.min.css"%}">
+<script src="{% static "assets/js/jquery.min.js"%}"></script>
+{% endblock %}
 {% block content %}
 <div id="main">
   <div class="inner row">
-    <section class="5u 12u(medium) bgray">
+    <section class="5u 12u(medium)">
     <h1>Sign up</h1>
       <form method="post">
         {% csrf_token %}
@@ -35,4 +38,9 @@
     </section>
   </div>
 </div>
+{% endblock %}
+{% block FooterScript %}
+<script src="{% static "assets/js/jquery.popSelect.min.js"%}"></script>
+<script src="{% static "assets/js/MultiSelectInit.js"%}"></script>
+	<link rel="stylesheet" href="{% static "assets/css/TextAreaBeauty.css" %}" />
 {% endblock %}

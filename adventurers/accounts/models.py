@@ -11,12 +11,12 @@ class Member(UserenaBaseProfile):
 # 如果要讓使用者可以選擇語言, 則繼承自UserenaLanguageBaseProfile
     user = models.OneToOneField(User,unique=True,
     verbose_name=_('user'),related_name='my_profile')
-    level = models.IntegerField()
+    level = models.IntegerField(default=0)
     skills = models.ManyToManyField(Skill)
-    partners = models.ManyToManyField(User)
-    missions_completed = models.ManyToManyField(Mission, related_name='missions_completed')
-    missions_wip = models.ManyToManyField(Mission, related_name='missions_wip')
-    missions_failed = models.ManyToManyField(Mission, related_name='missions_failed')
+    partners = models.ManyToManyField(User,blank=True)
+    missions_completed = models.ManyToManyField(Mission, related_name='missions_completed',blank=True)
+    missions_wip = models.ManyToManyField(Mission, related_name='missions_wip',blank=True)
+    missions_failed = models.ManyToManyField(Mission, related_name='missions_failed',blank=True)
     bios = models.TextField()
     contact = models.TextField()
 

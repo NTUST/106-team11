@@ -6,7 +6,7 @@
 {% block content %}
 <div id="main">
   <div class="inner row">
-    <section class="5u 12u(medium) bgray">
+    <section class="5u 12u(medium)">
       <h1>Sign in</h1>
       <form method="post">
         {% csrf_token %}
@@ -22,7 +22,7 @@
           </div>
           {% else %}
           <div class="field">
-            <p>            
+            <p>
             {{ field.label_tag }}
             {{ field }}
             {{ field.errors }}
