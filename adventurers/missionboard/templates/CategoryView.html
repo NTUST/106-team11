@@ -6,7 +6,7 @@
 <div id="main">
 	<div class="inner">
 		<div class="inner">
-			<h1>{{category.name}}任務表</h1>
+			<h1>{{category.name}} 任務列表</h1>
 		</div>
 		<div class="inner">
 			<table id="missions" class="display" cellspacing="0" width="100%">
@@ -26,12 +26,16 @@
 						<td><a href="{% url "missionboard_details" m.id %}" title="">{{m.name}}</a></td>
 						<td>{{m.required_level}}</td>
 						<td>
-						{% for s in m.required_skills.all  %}
-						<a href="{% url 'missionboard_category' s.id %}">{{s.name}}</a>　
+						{% for s in m.required_skills.all|dictsort:"name"  %}
+							{% if not forloop.last %}
+							<a href="{% url 'missionboard_category' s.id %}">{{s.name}}</a>,
+							{% else %}
+							<a href="{% url 'missionboard_category' s.id %}">{{s.name}}</a>
+							{% endif %}
 						{% endfor %}
 						</td>
 						<td>{{m.posted_on}}</td>
-						<td>{{m.posted_by.username}}</td>
+						<td><a href="{% url 'userena_profile_detail' m.posted_by.username %}">{{m.posted_by.username}}</a></td>
 					</tr>
 					{% endfor %}
 				</tbody>
@@ -45,7 +49,9 @@
 <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 <script>
 	$(document).ready(function() {
-			$('#missions').DataTable();
+			$('#missions').DataTable({
+				"order": [[ 3, "desc" ]]
+			});
 	} );
 </script>
 {% endblock %}

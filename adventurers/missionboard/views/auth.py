@@ -47,3 +47,11 @@ def register(request):
             return redirect('signin.html')
         else:
             return render(request, 'register.html', {'form': form})
+
+
+
+def get_user(user):
+    if user.is_authenticated():
+        return user
+    else:
+        return None
