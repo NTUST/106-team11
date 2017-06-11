@@ -13,6 +13,7 @@
 				<thead>
 					<tr>
 						<th>任務名稱</th>
+						<th>等級需求</th>
 						<th>需求技能</th>
 						<th>投案日</th>
 						<th>投案人</th>
@@ -23,6 +24,7 @@
 					{% for m in missions %}
 					<tr>
 						<td><a href="{% url "missionboard_details" m.id %}" title="">{{m.name}}</a></td>
+						<td>{{m.required_level}}</td>
 						<td>
 						{% for s in m.required_skills.all  %}
 						<a href="{% url 'missionboard_category' s.id %}">{{s.name}}</a>　
