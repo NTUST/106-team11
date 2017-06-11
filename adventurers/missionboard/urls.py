@@ -8,5 +8,6 @@ urlpatterns = [
     url(r'^aboutus', pages.aboutus, name='missionboard_aboutus'),
     url(r'^donate', pages.donate, name='missionboard_donate'),
     url(r'^details/(?P<mission_id>\d+)', eason.details, name='missionboard_details'),
+    url(r'^category/(?P<skill_id>\d+)', eason.category, name='missionboard_category'),
     url(r'^$', pages.index, name='missionboard_index'),
 ]
