@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from django.utils import timezone
 
 from missionboard.models import Skill
 
@@ -16,6 +17,12 @@ class NewMissionForm(forms.Form):
         widget=forms.CheckboxSelectMultiple()
     )
 
+    def clean_required_skills(self):
+        skills = self.cleaned_data['required_skills']
+        if skills.count() == 0:
+            self.add_error('name', '最少需要一項技能!')
+        return skills
+
     required_level = forms.IntegerField(
         label='等級需求',
         min_value=0,
@@ -30,6 +37,27 @@ class NewMissionForm(forms.Form):
             'class': 'align-center'
         })
     )
+
+    def clean_application_deadline(self):
+        application_deadline = self.cleaned_data['application_deadline']
+        if application_deadline < timezone.now():
+            self.add_error('application_deadline', '朋友, 你不能活在過去...')
+        return application_deadline
+
+    working_deadline = forms.DateTimeField(
+        label='任務結束日期',
+        widget=forms.TextInput(attrs={
+            'class': 'align-center'
+        })
+    )
+
+    def clean_working_deadline(self):
+        working_deadline = self.cleaned_data['working_deadline']
+        if working_deadline < timezone.now():
+            self.add_error('working_deadline', '朋友, 你不能活在過去...')
+        elif working_deadline < self.cleaned_data['application_deadline']:
+            self.add_error('working_deadline', '你總不能要求別人在報名確立前就動工吧...')
+        return working_deadline
 
     description = forms.CharField(
         label='任務內容',
