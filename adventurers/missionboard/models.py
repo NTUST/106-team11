@@ -27,7 +27,7 @@ class MissionManager(models.Manager):
     def generate(self):
         u = None
         while u is None or u == User.objects.get(id=1):
-            u = User.objects.get(id=random.randint(1, User.objects.count()))            
+            u = User.objects.get(id=random.randint(1, User.objects.count()))
 
         obj = self.create(
             name=' '.join(fake.text().split(' ')[:5]),
@@ -60,7 +60,7 @@ class Mission(models.Model):
     application_deadline = models.DateTimeField()
     working_deadline = models.DateTimeField()
     description = models.TextField()
-    applied_by = models.ManyToManyField(User, related_name='applied_by')
+    applied_by = models.ManyToManyField(User, related_name='applied_by', blank=True)
     objects = MissionManager()
 
     def __str__(self):
