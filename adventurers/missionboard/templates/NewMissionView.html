@@ -1,6 +1,8 @@
 {% extends "layout/base.html" %}
 {% load static %}
 
+{% block title %}| 發表任務{% endblock %}
+
 {% block HeaderScript %}
 <style>
 	.casebox
@@ -36,7 +38,13 @@
 					<p>任務名稱: {{form.name}}</p>
 
 					<!-- checkbox  -->
-					<p>技能需求:</p>
+					<p>
+						技能需求:
+						{% if form.required_skills.errors %}
+						<strong style="color:red;">{{form.required_skills.errors}}</strong>
+						{% endif %}
+					</p>
+
 					<div class="12u 12u$(small) row mission_check">
 						{% for c in form.required_skills %}
 						<div class="3u">
@@ -44,14 +52,26 @@
 							<label for={{c.id_for_label}}>{{c.choice_label}}</label>
 						</div>
 						{% endfor %}
-					</div><br>
+					</div>
+
+					<br>
 
 					<!-- level -->
 					<p>等級需求 : {{form.required_level}}</p>
 
 					<!-- datepicker -->
-					<p class="2u 12u(small)">截止日:
-						{{form.application_deadline}}						
+					<p class="2u 12u(small)">報名截止日期:
+						{{form.application_deadline}}
+						{% if form.application_deadline.errors %}
+						<b style="color:red;">{{form.application_deadline.errors}}</b>
+						{% endif %}
+					</p>
+
+					<p class="2u 12u(small)">任務結束日期:
+						{{form.working_deadline}}
+						{% if form.working_deadline.errors %}
+						<b style="color:red;">{{form.working_deadline.errors}}</b>
+						{% endif %}
 					</p>
 
 					<!-- mission_content -->
@@ -82,6 +102,7 @@
 <script>
 $(function(){
 	$('#{{form.application_deadline.id_for_label}}').appendDtpicker();
+	$('#{{form.working_deadline.id_for_label}}').appendDtpicker();
 });
 </script>
 {% endblock %}

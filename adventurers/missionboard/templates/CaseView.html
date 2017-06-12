@@ -1,6 +1,8 @@
 {% extends "layout/base.html" %}
 {% load static %}
 
+{% block title %}| Case: {{mission.name}}{% endblock %}
+
 
 {% block HeaderScript %}
 <!--casebox class render-->
@@ -21,7 +23,7 @@
 			<label>需求技能:
 			{% for s in mission.required_skills.all  %}
 				{% if not forloop.last %}
-				<a href="{% url 'missionboard_category' s.id %}">{{s.name}}</a>, 
+				<a href="{% url 'missionboard_category' s.id %}">{{s.name}}</a>,
 				{% else %}
 				<a href="{% url 'missionboard_category' s.id %}">{{s.name}}</a>
 				{% endif %}
