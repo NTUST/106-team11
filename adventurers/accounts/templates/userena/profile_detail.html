@@ -1,11 +1,21 @@
 {% extends 'layout/base.html' %}
 {% load i18n %}
-
-
+{% load static %}
+{% block HeaderScript %}
+<script src="{% static "assets/js/progressbar.min.js"%}"></script>
+<style media="screen">
+#container {
+margin-bottom: : 20px;
+width: 400px;
+height: 8px;
+position: relative;
+}
+</style>
+{% endblock %}
 
 {% block content %}
 
-<div id="main">
+<div class="casebox box">
 	<div class="inner">
   <div class="white-box">
     {% block content_title %}<h1>{{ profile.user.username }} {% if profile.user.get_full_name %}({{ profile.user.get_full_name }}){% endif %}</h1>{% endblock %}
@@ -14,10 +24,10 @@
       {% if user.username == profile.user.username %}
         <ul id="box-nav">
           {% block profile_navigation_items %}
-            <li><a href="{% url 'userena_profile_detail' user.username %}">{% trans "View profile" %}</a></li>
-            <li><a href="{% url 'userena_profile_edit' user.username %}">{% trans "Edit details" %}</a></li>
-            <li><a href="{% url 'userena_password_change' user.username %}">{% trans "Change password" %}</a></li>
-            <li><a href="{% url 'userena_email_change' user.username %}">{% trans "Change email" %}</a></li>
+             &nbsp <i class="fa fa-angle-right"></i> &nbsp<a href="{% url 'userena_profile_detail' user.username %}">{% trans "View profile" %}</a>
+           &nbsp <i class="fa fa-angle-right"></i> &nbsp<a href="{% url 'userena_profile_edit' user.username %}">{% trans "Edit details" %}</a>
+             &nbsp <i class="fa fa-angle-right"></i> &nbsp<a href="{% url 'userena_password_change' user.username %}">{% trans "Change password" %}</a>
+             &nbsp <i class="fa fa-angle-right"></i> &nbsp<a href="{% url 'userena_email_change' user.username %}">{% trans "Change email" %}</a>
           {% endblock %}
         </ul>
       {% endif %}
@@ -28,21 +38,28 @@
         <dl>
           {% block profile_definition_list %}
             {% if profile.user.email and not hide_email %}
-              <dt>{% trans "Email" %}</dt>
-              <dd>{{ profile.user.email }}</dd>
+              <dt>{% trans "Email" %} &nbsp <i class="fa fa-angle-right"></i> &nbsp {{ profile.user.email }}</dt>
+
             {% endif %}
             {% if profile.skills %}
-              <dt>{% trans "skills" %}</dt>
+              <dt>{% trans "skills" %} &nbsp <i class="fa fa-angle-right"></i> &nbsp
               {% for skill in profile.skills.all %}
-              <dd>{{ skill  }}</dd>
+            	<a href="#" style="background-color:#eff0f1;padding:3px">{{ skill  }}</a>
+							 &nbsp
               {% endfor %}
+							</dt>
             {% endif %}
-              <dt>{% trans "level" %}</dt>
-              <dd>{% trans "Your level" %}：lv.{{ profile.level }}</dd>
+              <dt>{% trans "level" %}&nbsp <i class="fa fa-angle-right"></i> &nbsplv.{{ profile.level }}</dt>
+							<dt style="display:inline-block">{% trans "exp" %}&nbsp <i class="fa fa-angle-right"></i> &nbsp</dt><div id="container" style="display:inline-block;"></div>
+							<dt>{% trans "cases (finished)" %}&nbsp <i class="fa fa-angle-right"></i> &nbsp{{ profile.missions_completed.count }}</dt>
+							<dt>{% trans "cases (failed)" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp{{ profile.missions_failed.count }}</dt>
+							<dt>{% trans "cases (now)" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp{{ profile.missions_wip.count }}</dt>
+							<dt>{% trans "cases (total)" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp{{  profile.missions_completed.count|add:profile.missions_failed.count|add:profile.missions_wip.count}}</dt>
               <dt>{% trans "About me" %}</dt>
+							<blockquote>123</blockquote>
               <dd>{{ profile.bios }}</dd>
               <dt>{% trans "Contact" %}</dt>
-              <dd>{{ profile.contact }}</dd>
+              <blockquote>{{ profile.contact }}</blockquote>
           {% endblock %}
         </dl>
       {% endblock %}
@@ -51,3 +68,50 @@
 </div>
 </div>
 {% endblock %}
+{% block FooterScript %}
+<script type="text/javascript">
+var now = parseInt({{ profile.missions_completed.count }})
+var highgest = parseInt({%widthratio profile.level|add:1 1 3%})
+var bar = new ProgressBar.Line(container, {
+  strokeWidth: 4,
+  easing: 'easeInOut',
+  duration: 1400,
+  color: '#FFEA82',
+  trailColor: '#eee',
+  trailWidth: 1,
+  svgStyle: {width: '100%', height: '100%'},
+  text: {
+    style: {
+      // Text color.
+      // Default: same as stroke color (options.color)
+      color: '#999',
+      position: 'absolute',
+      right: '0',
+      top: '30px',
+      padding: 0,
+      margin: 0,
+      transform: null
+    },
+    autoStyleContainer: false
+  },
+  from: {color: '#FFEA82'},
+  to: {color: '#ED6A5A'},
+  step: (state, bar) => {
+		if(now==0)
+		{
+			bar.setText(0+ ' / '+highgest);
+				bar.stop();
+		}
+		else if(bar.value()*highgest>=now)
+		{
+			bar.stop();
+		}
+		else {
+			bar.setText(Math.round(bar.value()*highgest)+ ' / '+highgest);
+		}
+  }
+});
+
+bar.animate(1.0);  // Number from 0.0 to 1.0//
+</script>
+{% endblock%}

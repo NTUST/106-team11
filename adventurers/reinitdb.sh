@@ -8,16 +8,16 @@ rm -v */migrations/000*
 rm db.sqlite3
 
 source env/bin/activate
-python manage.py makemigrations
-python manage.py migrate
+python3 manage.py makemigrations
+python3 manage.py migrate
 
 python gen_data.py
 
 echo ''
 echo 'Setup super user...'
-python manage.py createsuperuser --email=admin@test.local
+python3 manage.py createsuperuser --email=admin@test.local
 
 echo ''
 echo 'Running development server...'
-python manage.py runserver
+python3 manage.py runserver
 exit 0

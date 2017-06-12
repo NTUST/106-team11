@@ -17,8 +17,8 @@ class Member(UserenaBaseProfile):
     missions_completed = models.ManyToManyField(Mission, related_name='missions_completed',blank=True)
     missions_wip = models.ManyToManyField(Mission, related_name='missions_wip',blank=True)
     missions_failed = models.ManyToManyField(Mission, related_name='missions_failed',blank=True)
-    bios = models.TextField()
-    contact = models.TextField()
+    bios = models.TextField(blank=True)
+    contact = models.TextField(blank=True)
 
     def __str__(self):
         return self.user.username
