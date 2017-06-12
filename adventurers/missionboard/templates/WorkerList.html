@@ -11,110 +11,35 @@
       <!-- BODY_資料表-->
       <div class="modal-body">
         <div class="inner">
-            <table id="mainTable" class="display alt" cellspacing="0" width="100%" style="word-break: break-all;">
-              <thead>
-                      <tr>
-                          <th></th><!-- checkbox欄位 -->
-                          <th>名字</th>
-                          <th>level</th>
-                          <th>成功率</th>
-                          <th>報名日</th>
-                      </tr>
-              </thead>
-                  <tbody>
-                  <!-- 以下都為測試資料可以刪掉 -->
-                      <tr>
-                          <td></td>
-                          <td>亡八淡</td>
-                          <td>100</td>
-                          <td>100%</td>
-                          <td>2017/6/8</td>
-                      </tr>
-                       <tr>
-                          <td></td>
-                          <td>志帳兒</td>
-                          <td>90</td>
-                          <td>90%</td>
-                          <td>2017/6/9</td>
-                      </tr>
-                       <tr>
-                          <td></td>
-                          <td>瑙蠶兒</td>
-                          <td>100</td>
-                          <td>100%</td>
-                          <td>2017/6/10</td>
-                      </tr>
-                       <tr>
-                          <td></td>
-                          <td>亡八淡</td>
-                          <td>100</td>
-                          <td>100%</td>
-                          <td>2017/6/8</td>
-                      </tr>
-                       <tr>
-                          <td></td>
-                          <td>志帳兒</td>
-                          <td>90</td>
-                          <td>90%</td>
-                          <td>2017/6/9</td>
-                      </tr>
-                       <tr>
-                          <td></td>
-                          <td>瑙蠶兒</td>
-                          <td>100</td>
-                          <td>100%</td>
-                          <td>2017/6/10</td>
-                      </tr>
-                       <tr>
-                          <td></td>
-                          <td>亡八淡</td>
-                          <td>100</td>
-                          <td>100%</td>
-                          <td>2017/6/8</td>
-                      </tr>
-                       <tr>
-                          <td></td>
-                          <td>志帳兒</td>
-                          <td>90</td>
-                          <td>90%</td>
-                          <td>2017/6/9</td>
-                      </tr>
-                       <tr>
-                          <td></td>
-                          <td>瑙蠶兒</td>
-                          <td>100</td>
-                          <td>100%</td>
-                          <td>2017/6/10</td>
-                      </tr>
-                       <tr>
-                          <td></td>
-                          <td>亡八淡</td>
-                          <td>100</td>
-                          <td>100%</td>
-                          <td>2017/6/8</td>
-                      </tr>
-                       <tr>
-                          <td></td>
-                          <td>志帳兒</td>
-                          <td>90</td>
-                          <td>90%</td>
-                          <td>2017/6/9</td>
-                      </tr>
-                       <tr>
-                          <td></td>
-                          <td>瑙蠶兒</td>
-                          <td>100</td>
-                          <td>100%</td>
-                          <td>2017/6/10</td>
-                      </tr>
-                  </tbody>
-              </table>
+          <table id="mainTable" class="display alt" cellspacing="0" width="100%" style="word-break: break-all;">
+            <thead>
+              <tr>
+                <th></th><!-- checkbox欄位 -->
+                <th>名字</th>
+                <th>等級</th>
+                <th>成功率</th>
+                <th>報名日</th>
+              </tr>
+            </thead>
+            <tbody>
+            <!-- 以下都為測試資料可以刪掉 -->
+              {% for i in ma %}
+              <tr>
+                <td></td><!-- checkbox欄位 -->
+                <td>{{i.applied_by.username}}</td>
+                <td>{{i.applied_by.my_profile.level}}</td>
+                <td>100%</td>
+                <td>{{i.applied_on}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
 
-              <div class="align-center">
-              <!-- 確認選擇人的按鈕 -->
-                 <button type="button" class="button special" data-dismiss="modal">確認</button>
-              </div>
+          <div class="align-center">
+          <!-- 確認選擇人的按鈕 -->
+             <button type="button" class="button special" data-dismiss="modal">確認</button>
           </div>
+        </div>
       </div>
       <!-- FOOTER_取消彈跳視窗的按鈕 -->
       <div class="modal-footer">

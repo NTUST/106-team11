@@ -1,0 +1,22 @@
+{% extends "layout/base.html" %}
+{% load static %}
+
+{% block HeaderScript %}
+<!--casebox class render-->
+<link rel="stylesheet" href="{% static "assets/css/CaseBox.css" %}" />
+{% endblock %}
+
+{% block title %}| 成功接案{% endblock %}
+
+{% block content %}
+<div id="main">
+  <div class="inner">
+    <div class="casebox box">
+      <h1 style="align-center">你已成功接案</h1>
+      <p style="align-center">
+        <a href="{% url 'missionboard_details' m.id %}">回到任務資料: <strong>{{m.name}}</strong></a>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

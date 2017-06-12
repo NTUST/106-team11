@@ -1,7 +1,7 @@
 {% extends "layout/base.html" %}
 {% load static %}
 
-{% block title %}| Case: {{mission.name}}{% endblock %}
+{% block title %}| Case: {{m.name}}{% endblock %}
 
 
 {% block HeaderScript %}
@@ -19,9 +19,10 @@
 		<h1>Case information</h1>
 		<!-- 內容 -->
 		<div class="casebox box">
-			<label>案名: {{ mission.name }}</label>
+			<label>案名: {{ m.name }}</label>
+			<label>投案人: <a href="{% url 'userena_profile_detail' m.posted_by.username %}">{{m.posted_by.username}}</a></label>
 			<label>需求技能:
-			{% for s in mission.required_skills.all  %}
+			{% for s in m.required_skills.all  %}
 				{% if not forloop.last %}
 				<a href="{% url 'missionboard_category' s.id %}">{{s.name}}</a>,
 				{% else %}
@@ -29,31 +30,24 @@
 				{% endif %}
 			{% endfor %}
 			</label>
-			<label>等級下限: {{ mission.required_level }}</label>
-			<label>投案日: {{ mission.posted_on}} </label>
-			{% if user.is_authenticated %}
-			<label>接案日:</label>
-			{% endif %}
-			<label>任務內容:</label><p>{{ mission.description }}<p>
+			<label>等級下限: {{ m.required_level }}</label>
+			<label>投案日: {{ m.posted_on }}</label>
+			<label>人數需求: {{ m.required_worker_num }}</label>
+			<label>任務內容:</label><p>{{ m.description }}<p>
 		</div>
-		<!-- 關於人的內容 -->
-		<div class="casebox box">
-			{% if user.is_authenticated and user == mission.posted_by %}
-			<label>接案人:</label>
-			{% endif %}
-			<label>投案人: <a href="{% url 'userena_profile_detail' mission.posted_by.username %}">{{mission.posted_by.username}}</a> </label>
-			<label>人數需求:</label>
-			<label>接案時間:</label>
-			<label>是否完成:</label>
-		</div>
+
+		{% if user.is_authenticated %}
 		<!-- button casebutton-->
 		<ul class="actions align-center">
-			<li><a href="#" class="button special">接案</a></li>
-			<li><a href="#" class="button ">放棄</a></li>
-			<li><a href="#" class="button special">確定更改</a></li>
+			{% if user not in m.applied_by.all %}
+			<li><a href="{% url 'missionboard_case_applied' m.id %}" class="button special">接案</a></li>
+			{% endif %}
 		</ul>
-		<a type="button" class="" data-toggle="modal" data-target="#WorkList">選擇接案人</a>
+		{% endif %}
+
+		{% if user in m.applied_by.all or user is m.posted_by %}
 		{% include 'WorkerList.html' %}
+		{% endif %}
 	</div>
 </div>
 {% endblock %}
@@ -61,6 +55,6 @@
 
 {% block FooterScript %}
 <script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script>
-<script src="{% static "assets/js/dataTables.select.min.js"%}"></script>
-<script src="{% static "assets/js/dataTables.buttons.min.js"%}"></script>
+<script src="{% static "assets/js/dataTables.select.min.js" %}"></script>
+<script src="{% static "assets/js/dataTables.buttons.min.js" %}"></script>
 {% endblock %}
