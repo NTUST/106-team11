@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from django.utils import timezone
 
 from missionboard.models import Skill
 
@@ -16,6 +17,11 @@ class NewMissionForm(forms.Form):
         widget=forms.CheckboxSelectMultiple()
     )
 
+    def clean_required_skills(self):
+        skills = self.cleaned_data['required_skills']
+        if skills.count() == 0:
+            self.add_error('name', '最少需要一項技能!')
+
     required_level = forms.IntegerField(
         label='等級需求',
         min_value=0,
@@ -30,6 +36,11 @@ class NewMissionForm(forms.Form):
             'class': 'align-center'
         })
     )
+
+    def clean_application_deadline(self):
+        application_deadline = self.cleaned_data['application_deadline']
+        if application_deadline < timezone.now():
+            self.add_error('application_deadline', '朋友, 你不能活在過去...')
 
     description = forms.CharField(
         label='任務內容',
