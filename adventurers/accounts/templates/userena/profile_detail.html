@@ -55,9 +55,13 @@ position: relative;
 							<dt>{% trans "cases (failed)" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp{{ profile.missions_failed.count }}</dt>
 							<dt>{% trans "cases (now)" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp{{ profile.missions_wip.count }}</dt>
 							<dt>{% trans "cases (total)" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp{{  profile.missions_completed.count|add:profile.missions_failed.count|add:profile.missions_wip.count}}</dt>
+								<dt>{% trans "partners" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp
+									{% for item in profile.partners.all %}
+									<a href="../{{item}}">{{item}}</a>
+										&nbsp
+									{% endfor %}
               <dt>{% trans "About me" %}</dt>
-							<blockquote>123</blockquote>
-              <dd>{{ profile.bios }}</dd>
+							<blockquote>{{ profile.bios }}</blockquote>
               <dt>{% trans "Contact" %}</dt>
               <blockquote>{{ profile.contact }}</blockquote>
           {% endblock %}
