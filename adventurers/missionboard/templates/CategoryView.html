@@ -37,7 +37,11 @@
 						{% endfor %}
 						</td>
 						<td>{{m.posted_on}}</td>
+						{% if user.is_authenticated %}
 						<td><a href="{% url 'userena_profile_detail' m.posted_by.username %}">{{m.posted_by.username}}</a></td>
+						{% else %}
+						<td>{{m.posted_by.username}}</td>
+						{% endif %}
 					</tr>
 					{% endfor %}
 				</tbody>

@@ -26,7 +26,7 @@
               {% for i in ma %}
               <tr>
                 <td></td><!-- checkbox欄位 -->
-                <td>{{i.applied_by.username}}</td>
+                <td><a href="{% url 'userena_profile_detail' i.applied_by.username %}">{{i.applied_by.username}}</a></td>
                 <td>{{i.applied_by.my_profile.level}}</td>
                 <td>100%</td>
                 <td>{{i.applied_on}}</td>

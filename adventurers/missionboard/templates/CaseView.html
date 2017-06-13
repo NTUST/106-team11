@@ -20,7 +20,11 @@
 		<!-- 內容 -->
 		<div class="casebox box">
 			<label>案名: {{ m.name }}</label>
+			{% if user.is_authenticated %}
 			<label>投案人: <a href="{% url 'userena_profile_detail' m.posted_by.username %}">{{m.posted_by.username}}</a></label>
+			{% else %}
+			<label>投案人: {{m.posted_by.username}}</label>
+			{% endif %}
 			<label>需求技能:
 			{% for s in m.required_skills.all  %}
 				{% if not forloop.last %}
@@ -45,7 +49,7 @@
 		</ul>
 		{% endif %}
 
-		{% if user in m.applied_by.all or user is m.posted_by %}
+		{% if user.is_authenticated %}
 		{% include 'WorkerList.html' %}
 		{% endif %}
 	</div>

@@ -31,6 +31,9 @@ class MissionManager(models.Manager):
         while u is None or u == User.objects.get(id=1):
             u = User.objects.get(id=random.randint(1, User.objects.count()))
 
+        worker_num = random.randint(2, 6)
+        level = random.randint(1, 11)
+
         obj = self.create(
             name=' '.join(fake.text().split(' ')[:5]),
             posted_by=u,
@@ -42,8 +45,8 @@ class MissionManager(models.Manager):
             description=fake.text(),
             working_deadline=fake.date_time_between(
                 start_date="+15d", end_date="+30d", tzinfo=tz('Asia/Taipei')),
-            required_level=random.randint(1, 11),
-            required_worker_num=random.randint(1, 6)
+            required_level=level,
+            required_worker_num=worker_num
         )
 
         skill_list = []
@@ -53,6 +56,23 @@ class MissionManager(models.Manager):
                 skill_list.append(s)
         obj.required_skills.set(skill_list)
         obj.save()
+
+        applied_user = []
+        num = random.randint(2, 20)
+        all_users = list(User.objects.all().exclude(username='AnonymousUser'))
+        for n in range(1, num):
+            au = User.objects.get(id=2)
+            while au.my_profile.level < level:
+                au = random.sample(all_users, 1)[0]
+                print(au)
+
+            if au not in applied_user:
+                applied_user.append(au)
+
+        for x in applied_user:
+            m = MissionApplication.objects.create(applied_by=x, mission=obj)
+            x.my_profile.missions_wip.add(m.mission)
+
         return obj
 
 
@@ -80,3 +100,6 @@ class MissionApplication(models.Model):
     applied_by = models.ForeignKey(User, on_delete=models.CASCADE)
     mission = models.ForeignKey(Mission, on_delete=models.CASCADE)
     applied_on = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.mission.name + ', ' + self.applied_by.username

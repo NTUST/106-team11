@@ -31,7 +31,7 @@ def gen_users(num):
         u.save()
 
         m = Member.objects.create(user=u,
-                              level=random.randint(1, 6),
+                              level=random.randint(1, 20),
                               bios=fake.text(),
                               contact=fake.text())
         skill_list = []
