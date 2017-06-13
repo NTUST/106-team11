@@ -2,16 +2,18 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
-from missionboard.models import Skill, Mission
+from missionboard.models import Skill, Mission, MissionApplication
 from missionboard.forms import NewMissionForm
 from .auth import get_user
 
 
 def details(request, mission_id):
-    mission = Mission.objects.get(id=mission_id)
+    m = Mission.objects.get(id=mission_id)
+    ma = MissionApplication.objects.filter(mission=m)
     context = {
         'user': get_user(request.user),
-        'mission': mission
+        'm': m,
+        'ma': ma
     }
     return render(request, 'CaseView.html', context)
 
@@ -62,3 +64,12 @@ def new_mission(request):
     else:
         print('WTF?')
         return redirect('missionboard_index')
+
+
+@login_required
+def case_applied(request, mission_id):
+    m = Mission.objects.get(id=mission_id)
+    ma = MissionApplication.objects.create(applied_by=request.user, mission=m)
+    request.user.my_profile.missions_wip.add(m)
+    context = {'user': request.user, 'm': m}
+    return render(request, 'CaseApplied.html', context)

@@ -31,6 +31,14 @@ class NewMissionForm(forms.Form):
         })
     )
 
+    required_worker_num = forms.IntegerField(
+        label='人數需求',
+        min_value=1,
+        widget=forms.NumberInput(attrs={
+            'class': 'align-center'
+        })
+    )
+
     application_deadline = forms.DateTimeField(
         label='截止報名日期',
         widget=forms.TextInput(attrs={

@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^managecase/(?P<mission_id>\d+)', aaron.Managedetails, name='missionboard_manage_details'),
     url(r'^managecase/', aaron.ManageCase, name='missionboard_manage_case'),
     url(r'^new_mission/', eason.new_mission, name='missionboard_new_mission'),
+    url(r'^case_applied/(?P<mission_id>\d+)', eason.case_applied, name='missionboard_case_applied'),
     url(r'^details/(?P<mission_id>\d+)', eason.details, name='missionboard_details'),
     url(r'^category/(?P<skill_id>\d+)', eason.category, name='missionboard_category'),
     url(r'^$', pages.index, name='missionboard_index'),
