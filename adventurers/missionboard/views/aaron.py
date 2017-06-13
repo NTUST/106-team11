@@ -19,4 +19,4 @@ def Managedetails(request, mission_id):
         'user': get_user(request.user),
         'mission': mission
     }
-    return render(request, 'CaseView.html', context)
+    return render(request, 'ManageCaseView.html', context)

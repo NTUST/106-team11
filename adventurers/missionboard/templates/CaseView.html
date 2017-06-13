@@ -1,19 +1,15 @@
 {% extends "layout/base.html" %}
 {% load static %}
-{% load i18n %}
-{% block title %}| Case: {{mission.name}}{% endblock %}
+
+{% block title %}| Case: {{m.name}}{% endblock %}
 
 
 {% block HeaderScript %}
-<script src="{% static "assets/js/jquery.min.js"%}"></script>
 <!--casebox class render-->
+<link rel="stylesheet" href="{% static "assets/css/CaseBox.css" %}" />
 <link rel="stylesheet" href="{% static "assets/css/jquery.dataTables.min.css" %}" />
 <link rel="stylesheet" href="{% static "assets/css/select.dataTables.min.css" %}" />
 <link rel="stylesheet" href="{% static "assets/css/buttons.dataTables.min.css" %}" />
-<link rel="stylesheet" href="{% static "assets/css/CaseBox.css" %}" />
-
-
-
 {% endblock %}
 
 
@@ -21,66 +17,48 @@
 <div id="main">
 	<div class="inner">
 		<h1>Case information</h1>
-		<br>
 		<!-- 內容 -->
 		<div class="casebox box">
-			<dd>{% trans "Mission Title" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp {{ mission.name }}</dd>
-			<dd>需求技能:
-			{% for s in mission.required_skills.all  %}
+			<label>案名: {{ m.name }}</label>
+			{% if user.is_authenticated %}
+			<label>投案人: <a href="{% url 'userena_profile_detail' m.posted_by.username %}">{{m.posted_by.username}}</a></label>
+			{% else %}
+			<label>投案人: {{m.posted_by.username}}</label>
+			{% endif %}
+			<label>需求技能:
+			{% for s in m.required_skills.all  %}
 				{% if not forloop.last %}
 				<a href="{% url 'missionboard_category' s.id %}">{{s.name}}</a>,
 				{% else %}
 				<a href="{% url 'missionboard_category' s.id %}">{{s.name}}</a>
 				{% endif %}
 			{% endfor %}
-			</dd>
-			<dd>{% trans "Level lower limit" %} &nbsp <i class="fa fa-angle-right"></i>  &nbsp {{ mission.required_level }}</dd>
-			<dd>{% trans "Post date" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp {{ mission.posted_on}} </dd>
-			<dd>{% trans "Register deadline" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp</dd>
-			<dd>{% trans "Mission content" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp</dd><blockquote>{{ mission.description }}</blockquote>
+			</label>
+			<label>等級下限: {{ m.required_level }}</label>
+			<label>投案日: {{ m.posted_on }}</label>
+			<label>人數需求: {{ m.required_worker_num }}</label>
+			<label>任務內容:</label><p>{{ m.description }}<p>
 		</div>
-		<!-- 關於人的內容 -->
-		<div class="casebox box">
-			{% if user.is_authenticated and user == mission.posted_by %}
-			<dd style="display:inline" >{% trans "Workers" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp
-			<fieldset id="workergroup" style="display:inline"></fieldset></dd>
-			<a type="button" style="display:table;margin-top:1%" class="button" data-toggle="modal" data-target="#WorkList">選擇接案人</a>
-			{% endif %}
-			<dd>{% trans "Tender" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp <a href="{% url 'userena_profile_detail' mission.posted_by.username %}">{{mission.posted_by.username}}</a> </dd>
-			<dd>{% trans "Limit on the number" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp</dd>
-			<dd>{% trans "Status" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp</dd>
-		</div>
+
+		{% if user.is_authenticated %}
 		<!-- button casebutton-->
 		<ul class="actions align-center">
-			<li><a href="#" class="button special">{% trans "Case succese" %}</a></li>
-			<li><a href="#" class="button ">{% trans "Case fail" %}</a></li>
-			<li><a href="#" class="button special">{% trans "Access change" %}</a></li>
+			{% if user not in m.applied_by.all %}
+			<li><a href="{% url 'missionboard_case_applied' m.id %}" class="button special">接案</a></li>
+			{% endif %}
 		</ul>
+		{% endif %}
 
+		{% if user.is_authenticated %}
 		{% include 'WorkerList.html' %}
+		{% endif %}
 	</div>
 </div>
 {% endblock %}
 
 
 {% block FooterScript %}
-
-<link rel="stylesheet" href="{% static "assets/css/bootstrap.min.css"%}"/>
-<script src="{% static "assets/js/bootstrap.min.js"%}"/>
-<script src="{% static "assets/js/skel.min.js" %}"></script>
-<script src="{% static "assets/js/util.js" %}"></script>
-<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 <script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script>
-<script src="{% static "assets/js/dataTables.select.min.js"%}"></script>
-<script src="{% static "assets/js/dataTables.buttons.min.js"%}"></script>
-<script src="{% static "assets/js/CheckBoxTableInit.js" %}"></script>
-<script src="{% static "assets/js/selectfunc.js"%}"></script>
-
-<style media="screen">
-dd
-{
-	font-size: 20px;
-	padding: 10px;
-}
-</style>
+<script src="{% static "assets/js/dataTables.select.min.js" %}"></script>
+<script src="{% static "assets/js/dataTables.buttons.min.js" %}"></script>
 {% endblock %}
