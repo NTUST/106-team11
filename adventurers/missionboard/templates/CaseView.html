@@ -26,7 +26,7 @@
 			<label>投案人: {{m.posted_by.username}}</label>
 			{% endif %}
 			<label>需求技能:
-			{% for s in m.required_skills.all  %}
+			{% for s in m.required_skills.all|dictsort:'name'  %}
 				{% if not forloop.last %}
 				<a href="{% url 'missionboard_category' s.id %}">{{s.name}}</a>,
 				{% else %}
@@ -45,6 +45,8 @@
 		<ul class="actions align-center">
 			{% if user not in m.applied_by.all %}
 			<li><a href="{% url 'missionboard_case_applied' m.id %}" class="button special">接案</a></li>
+			{% elif user in m.applied_by.all %}
+			<li><a href="{% url 'missionboard_case_applied' m.id %}" class="button special">放棄</a></li>
 			{% endif %}
 		</ul>
 		{% endif %}

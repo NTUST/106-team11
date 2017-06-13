@@ -69,7 +69,13 @@ def new_mission(request):
 @login_required
 def case_applied(request, mission_id):
     m = Mission.objects.get(id=mission_id)
-    ma = MissionApplication.objects.create(applied_by=request.user, mission=m)
-    request.user.my_profile.missions_wip.add(m)
-    context = {'user': request.user, 'm': m}
+    ma_qset = MissionApplication.objects.filter(applied_by=request.user, mission=m)
+    if ma_qset.count() > 0:
+        ma_qset.delete()
+        request.user.my_profile.missions_wip.remove(m)
+        context = {'user': request.user, 'm': m, 'msg': '你已放棄此案件!'}
+    else:
+        ma = MissionApplication.objects.create(applied_by=request.user, mission=m)
+        request.user.my_profile.missions_wip.add(m)
+        context = {'user': request.user, 'm': m, 'msg': '你已成功接案!'}
     return render(request, 'CaseApplied.html', context)
