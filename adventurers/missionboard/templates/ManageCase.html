@@ -8,88 +8,51 @@
 
 
 {% block content %}
-<div class="inner">
+<div id="main">
 	<div class="inner">
-		<h1>Manage your case</h1></div>
-	<div class="inner">
+			<div class="casebox box">
+		<h1>Manage your case</h1>
 		<table id="mainTable" class="display" cellspacing="0" width="100%">
 			<thead>
 				<tr>
 					<th>案名</th>
 					<th>需求技能</th>
 					<th>投案日</th>
-					<th>接案日</th>
+					<th>報名截止日</th>
+					<th>工作截止日</th>
+					<th>狀態</th>
 				</tr>
 			</thead>
 			<tbody>
+				{% for mission in Missions %}
 				<!-- 以下都為測試資料可以刪掉 -->
 				<tr>
-					<td><a href="" title="">掃地</a></td>
-					<td>手兒</td>
-					<td>2017/6/7</td>
-					<td>2017/6/8</td>
+					<td><a href="{{ mission.id }}" title="">{{mission.name}}</a></td>
+					<td>
+						{% for skills in mission.required_skills.all %}
+						<a href="#">{{ skills }}</a>
+						{% endfor %}
+					</td>
+					<td>{{mission.posted_on}}</td>
+					<td>{{mission.application_deadline}}</td>
+					<td>{{mission.working_deadline}}</td>
+						<td>
+					{% with mission.status as status%}
+					{% if status == 'application' %}
+					接受報名中
+					{% elif status == 'in_progress' %}
+					任務進行中
+					{% elif status == 'abandoned' %}
+					流案
+					{% elif status == 'completed' %}
+					完成
+					{% elif status == 'failed' %}
+					失敗
+					{% endif %}
+					{% endwith %}
+				</td>
 				</tr>
-				<tr>
-					<td><a href="" title="">掃地</a></td>
-					<td>手兒</td>
-					<td>2017/6/7</td>
-					<td>2017/6/7</td>
-				</tr>
-				<tr>
-					<td><a href="" title="">掃地</a></td>
-					<td>手兒</td>
-					<td>2017/6/7</td>
-					<td>2017/6/8</td>
-				</tr>
-				<tr>
-					<td><a href="" title="">掃地</a></td>
-					<td>手兒</td>
-					<td>2017/6/7</td>
-					<td>2017/6/8</td>
-				</tr>
-				<tr>
-					<td><a href="" title="">掃地</a></td>
-					<td>手兒</td>
-					<td>2017/6/7</td>
-					<td>2017/6/8</td>
-				</tr>
-				<tr>
-					<td><a href="" title="">掃地</a></td>
-					<td>手兒</td>
-					<td>2017/6/7</td>
-					<td>2017/6/8</td>
-				</tr>
-				<tr>
-					<td><a href="" title="">掃地</a></td>
-					<td>手兒</td>
-					<td>2017/6/7</td>
-					<td>2017/6/8</td>
-				</tr>
-
-				<tr>
-					<td><a href="" title="">掃地</a></td>
-					<td>手兒</td>
-					<td>2017/6/7</td>
-					<td>2017/6/8</td>
-				</tr>
-				<tr>
-					<td><a href="" title="">掃地</a></td>
-					<td>手兒</td>
-					<td>2017/6/7</td>
-					<td>2017/6/8</td>
-				</tr>
-				<tr>
-					<td><a href="" title="">掃地</a></td>
-					<td>手兒</td>
-					<td>2017/6/7</td>
-					<td>2017/6/8</td>
-				</tr>
-				<tr>
-					<td><a href="" title="">掃地</a></td>
-					<td>手兒</td>
-					<td>2017/6/7</td>
-					<td>2017/6/8</td>
-				</tr>
+	{% endfor %}
 			</tbody>
 		</table>
 	</div>
@@ -99,5 +62,6 @@
 
 
 {% block FooterScript %}
-<script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script>
+	<script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script>
+		<script src="{% static "assets/js/dataTableInit.js" %}"></script>
 {% endblock %}

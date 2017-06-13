@@ -1,0 +1,56 @@
+{% extends 'layout/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block HeaderScript %}
+<script src="{% static "assets/js/jquery.min.js"%}"></script>
+<link rel="stylesheet" href="{% static "assets/css/jquery.popSelect.min.css"%}">
+<link rel="stylesheet" href="{% static "assets/css/CaseBox.css" %}" />
+	<link rel="stylesheet" href="{% static "assets/css/MultiSelectInit.css" %}" />
+{% endblock %}
+{% block title %}{% trans "Account setup" %}{% endblock %}
+
+{% block content_title %}<h2>{% blocktrans with profile.user.username as username %}Account &raquo; {{ username }}{% endblocktrans %}</h2>{% endblock %}
+
+{% block content %}
+<div class="casebox box">
+	<div class="inner">
+  <div class="white-box">
+      <section class="5u 12u(medium)">
+          <h1>{% trans "Edit Profile" %}</h1>
+<form  enctype="multipart/form-data" method="post">
+  {% block profile_navigation_items %}
+     &nbsp <i class="fa fa-angle-right"></i> &nbsp<a href="{% url 'userena_profile_detail' user.username %}">{% trans "View profile" %}</a>
+   &nbsp <i class="fa fa-angle-right"></i> &nbsp<a href="{% url 'userena_profile_edit' user.username %}">{% trans "Edit details" %}</a>
+     &nbsp <i class="fa fa-angle-right"></i> &nbsp<a href="{% url 'userena_password_change' user.username %}">{% trans "Change password" %}</a>
+     &nbsp <i class="fa fa-angle-right"></i> &nbsp<a href="{% url 'userena_email_change' user.username %}">{% trans "Change email" %}</a>
+  {% endblock %}
+  {% csrf_token %}
+
+  <fieldset>
+  <br>
+  {% for field in form %}
+  {% if not field.name == "first_name" and not field.name == "last_name" %}
+    {{ field.label_tag }}
+    {{ field }}
+    {% if field.errors %}
+    <br>
+    <b style="color: red;">{{ field.errors }}</b>
+    {% endif %}
+    {% endif %}
+  {% endfor %}
+
+    {% csrf_token %}
+  </fieldset>
+  <br>
+  <input type="submit" value="{% trans "Save changes" %}" />
+</form>
+</section>
+</div>
+</div>
+</div>
+{% endblock %}
+{% block FooterScript %}
+<script src="{% static "assets/js/jquery.popSelect.min.js"%}"></script>
+<script src="{% static "assets/js/MultiSelectInit.js"%}"></script>
+	<link rel="stylesheet" href="{% static "assets/css/TextAreaBeauty.css" %}" />
+{% endblock %}

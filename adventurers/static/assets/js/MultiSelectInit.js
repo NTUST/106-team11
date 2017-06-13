@@ -1,5 +1,5 @@
 $(function() {
-	$("#main-Select").popSelect({
+	$(".main-Select").popSelect({
       position: 'bottom',
       showTitle: false
 	});

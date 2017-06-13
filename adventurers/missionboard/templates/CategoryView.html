@@ -52,7 +52,9 @@
 {% endblock %}
 
 {% block FooterScript %}
+	<link rel="stylesheet" href="{% static "assets/css/jquery.dataTables.min.css" %}" />
 <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+	<script src="{% static "assets/js/dataTableInit.js" %}"></script>
 <script>
 	$(document).ready(function() {
 			$('#missions').DataTable({
