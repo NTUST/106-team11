@@ -14,6 +14,7 @@ var chkbox_select_all  = $('thead input[name="select_all"]', $table).get(0);
 }
 
 $(document).ready(function (){
+          console.log(123)
 // Array holding selected row IDs
 var rows_selected = [];
 var table = $('#mainTable').DataTable({
@@ -22,7 +23,17 @@ var table = $('#mainTable').DataTable({
          {
              text: 'Select all',
              action: function () {
-                 table.rows().select();
+                table.rows().deselect();
+                 for(i=0;i<table.rows().count();i++)
+                 {
+                   if($(".selected").length<parseInt(worker_limit))
+                   {
+                      table.rows(':eq('+i+')').select();
+                   }
+                   else {
+                     break;
+                   }
+                 }
              }
          },
          {
@@ -48,7 +59,7 @@ var table = $('#mainTable').DataTable({
       var rowId = data[0];
 
       // If row ID is in the list of selected row IDs
-      if($.inArray(rowId, rows_selected) !== -1){
+      if( $.inArray(rowId, rows_selected) !== -1){
          $(row).find('input[type="checkbox"]').prop('checked', true);
          $(row).addClass('selected');
       }
@@ -57,6 +68,7 @@ var table = $('#mainTable').DataTable({
 
 // Handle click on checkbox
 $('#mainTable tbody').on('click', 'input[type="checkbox"]', function(e){
+
    var $row = $(this).closest('tr');
 
    // Get row data
@@ -77,8 +89,11 @@ $('#mainTable tbody').on('click', 'input[type="checkbox"]', function(e){
       rows_selected.splice(index, 1);
    }
 
-   if(this.checked){
-      $row.addClass('selected');
+   if(this.checked ){
+     if($(".selected").length<parseInt(worker_limit))
+     {
+       $row.addClass('selected');
+     }
    } else {
       $row.removeClass('selected');
    }
