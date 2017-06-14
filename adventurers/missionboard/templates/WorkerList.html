@@ -21,9 +21,9 @@
             <!-- 以下都為測試資料可以刪掉 -->
               {% for i in ma %}
               <tr>
-                <td><a href="{% url 'userena_profile_detail' i.applied_by.username %}">{{i.applied_by.username}}</a></td>
-                <td>{{i.applied_by.my_profile.level}}</td>
-                <td>{{i.applied_on}}</td>
+                <td><a href="{% url 'userena_profile_detail' i.register_user.username %}">{{i.register_user.username}}</a></td>
+                <td>{{i.register_user.my_profile.level}}</td>
+                <td>{{i.register_time_on}}</td>
               </tr>
               {% endfor %}
             </tbody>

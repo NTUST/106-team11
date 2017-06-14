@@ -37,7 +37,7 @@ def donate(request):
 
 def details(request, mission_id):
     m = Mission.objects.get(id=mission_id)
-    ma = MissionApplication.objects.filter(mission=m)
+    ma = RegisterApplication.objects.filter(mission=m)
 
     context = {
         'user': get_user(request.user),
