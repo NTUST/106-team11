@@ -44,6 +44,7 @@
 		{% if user.is_authenticated %}
 		<!-- button casebutton-->
 		<ul class="actions align-center">
+<<<<<<< HEAD
 			{% if user == m.posted_by %}
 			{% elif user in m.applied_by.all %}
 				{% if m.application_deadline|timeuntil:now > 0 %}

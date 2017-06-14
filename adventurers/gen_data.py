@@ -108,7 +108,6 @@ def gen_missions_helper():
 
     for x in random.sample(all_users, num):
         ma = MissionApplication.objects.create(applied_by=x, mission=m)
-        print(x, ma)
         x.my_profile.missions_wip.add(ma.mission)
 
 
