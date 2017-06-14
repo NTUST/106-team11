@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
@@ -14,7 +15,8 @@ def details(request, mission_id):
     context = {
         'user': get_user(request.user),
         'm': m,
-        'ma': ma
+        'ma': ma,
+        'now': timezone.now(),
     }
 
     return render(request, 'CaseView.html', context)
@@ -22,7 +24,8 @@ def details(request, mission_id):
 
 def category(request, skill_id):
     category = Skill.objects.get(id=skill_id)
-    missions = Mission.objects.filter(required_skills__in=[category], status='application')
+    missions = Mission.objects.filter(
+        required_skills__in=[category], status='application')
     context = {
         'user': get_user(request.user),
         'category': category,
@@ -72,14 +75,25 @@ def new_mission(request):
 
 @login_required
 def case_applied(request, mission_id):
-    m = Mission.objects.get(id=mission_id)
-    ma_qset = MissionApplication.objects.filter(applied_by=request.user, mission=m)
-    if ma_qset.count() > 0:
-        ma_qset.delete()
-        request.user.my_profile.missions_wip.remove(m)
-        context = {'user': request.user, 'm': m, 'msg': '你已放棄此案件!', 'title': '放棄案件'}
+    if request.method == 'POST':
+        m = Mission.objects.get(id=mission_id)
+        ma_qset = MissionApplication.objects.filter(
+            applied_by=request.user, mission=m)
+        if ma_qset.count() > 0 and m.application_deadline < timenow.now():
+            ma_qset.delete()
+            request.user.my_profile.missions_wip.remove(m)
+            context = {'user': request.user, 'm': m,
+                       'msg': '你已放棄此案件！', 'title': '放棄案件'}
+        else:
+            if request.user.my_profile.level >= m.required_level:
+                ma = MissionApplication.objects.create(
+                    applied_by=request.user, mission=m)
+                request.user.my_profile.missions_wip.add(m)
+                context = {'user': request.user, 'm': m,
+                           'msg': '你已成功接案！', 'title': '成功接案'}
+            else:
+                context = {'user': request.user, 'm': m,
+                           'msg': '等級不足，接案失敗！', 'title': '接案失敗'}
+        return render(request, 'CaseApplied.html', context)
     else:
-        ma = MissionApplication.objects.create(applied_by=request.user, mission=m)
-        request.user.my_profile.missions_wip.add(m)
-        context = {'user': request.user, 'm': m, 'msg': '你已成功接案!', 'title': '成功接案'}
-    return render(request, 'CaseApplied.html', context)
+        raise Http404("你不能這樣硬闖啦...")

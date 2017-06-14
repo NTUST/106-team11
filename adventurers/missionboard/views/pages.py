@@ -8,7 +8,6 @@ import random
 
 
 def index(request):
-    print(Skill.objects.all())
     skills = Skill.objects.all().order_by('name')
 
     for c in skills:
