@@ -4,7 +4,8 @@
     <li><a href={% url 'missionboard_index' %}>Home</a></li>
     <li><a href={% url 'missionboard_aboutus' %}>About us</a></li>
     <li><a href={% url 'missionboard_donate' %}>Donate</a></li>
-    {% if user %}
+    {% if user.is_authenticated %}
+    <li><a href={% url 'userena_profile_detail' user.username %}>Profile</a></li>
     <li><a href={% url 'missionboard_signout' %}>Sign out</a></li>
     {% else %}
     <li><a href={% url 'userena_signin' %}>Sign in</a></li>

@@ -10,17 +10,19 @@ from .auth import get_user
 def details(request, mission_id):
     m = Mission.objects.get(id=mission_id)
     ma = MissionApplication.objects.filter(mission=m)
+
     context = {
         'user': get_user(request.user),
         'm': m,
         'ma': ma
     }
+
     return render(request, 'CaseView.html', context)
 
 
 def category(request, skill_id):
     category = Skill.objects.get(id=skill_id)
-    missions = Mission.objects.filter(required_skills__in=[category])
+    missions = Mission.objects.filter(required_skills__in=[category], status='application')
     context = {
         'user': get_user(request.user),
         'category': category,
@@ -52,6 +54,8 @@ def new_mission(request):
                 application_deadline=form.cleaned_data['application_deadline'],
                 working_deadline=form.cleaned_data['working_deadline'],
                 description=form.cleaned_data['description'],
+                required_worker_num=form.cleaned_data['required_worker_num'],
+                status='application',
             )
             m.required_skills.set(form.cleaned_data['required_skills'])
             m.save()
@@ -73,7 +77,13 @@ def new_mission(request):
 @login_required
 def case_applied(request, mission_id):
     m = Mission.objects.get(id=mission_id)
-    ma = MissionApplication.objects.create(applied_by=request.user, mission=m)
-    request.user.my_profile.missions_wip.add(m)
-    context = {'user': request.user, 'm': m}
+    ma_qset = MissionApplication.objects.filter(applied_by=request.user, mission=m)
+    if ma_qset.count() > 0:
+        ma_qset.delete()
+        request.user.my_profile.missions_wip.remove(m)
+        context = {'user': request.user, 'm': m, 'msg': '你已放棄此案件!', 'title': '放棄案件'}
+    else:
+        ma = MissionApplication.objects.create(applied_by=request.user, mission=m)
+        request.user.my_profile.missions_wip.add(m)
+        context = {'user': request.user, 'm': m, 'msg': '你已成功接案!', 'title': '成功接案'}
     return render(request, 'CaseApplied.html', context)
