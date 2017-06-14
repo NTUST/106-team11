@@ -1,0 +1,21 @@
+{% extends 'layout/base.html' %}
+{% load i18n %}
+
+{% block content_title %}<h2>{% blocktrans with user.username as username %}Account &raquo; {{ username }}{% endblocktrans %}</h2>{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+  <ul id="box-nav">
+   &nbsp <i class="fa fa-cog"></i> &nbsp<a href="{% url 'userena_profile_detail' user.username %}">{% trans "View profile" %}</a>
+   &nbsp <i class="fa fa-cog"></i> &nbsp<a href="{% url 'userena_profile_edit' user.username %}">{% trans "Edit details" %}</a>
+   &nbsp <i class="fa fa-cog"></i> &nbsp<a href="{% url 'userena_password_change' user.username %}">{% trans "Change password" %}</a>
+   &nbsp <i class="fa fa-cog"></i> &nbsp<a href="{% url 'userena_email_change' user.username %}">{% trans "Change email" %}</a>
+  </ul>
+  {% csrf_token %}
+  <fieldset>
+    <legend>{% trans "Change email address" %}</legend>
+    {{ form.as_p }}
+  </fieldset>
+  <input type="submit" value="{% trans "Change email" %}" />
+</form>
+{% endblock %}

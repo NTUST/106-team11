@@ -45,10 +45,13 @@ def new_mission(request):
         return render(request, 'NewMissionView.html', context)
     elif request.method == 'POST':
         form = NewMissionForm(request.POST)
+
         if form.is_valid():
             m = Mission.objects.create(
                 name=form.cleaned_data['name'],
                 required_level=form.cleaned_data['required_level'],
+                required_worker_num=form.cleaned_data['required_worker_num'],
+                status='application',
                 posted_by=request.user,
                 posted_on=timezone.now(),
                 application_deadline=form.cleaned_data['application_deadline'],
@@ -63,6 +66,7 @@ def new_mission(request):
             context = {'user': request.user}
             return redirect('missionboard_details', m.id)
         else:
+            print(123)
             context = {
                 'user': request.user,
                 'form': form,

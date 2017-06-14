@@ -36,7 +36,8 @@
 			</dd>
 			<dd>{% trans "Level lower limit" %} &nbsp <i class="fa fa-angle-right"></i>  &nbsp {{ mission.required_level }}</dd>
 			<dd>{% trans "Post date" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp {{ mission.posted_on}} </dd>
-			<dd>{% trans "Register deadline" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp</dd>
+			<dd>{% trans "Register deadline" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp{{ mission.application_deadline}}</dd>
+				<dd>{% trans "Mission deadline" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp{{ mission.working_deadline}}</dd>
 			<dd>{% trans "Mission content" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp</dd><blockquote>{{ mission.description }}</blockquote>
 		</div>
 		<!-- 關於人的內容 -->
@@ -44,20 +45,59 @@
 			{% if user.is_authenticated and user == mission.posted_by %}
 			<dd style="display:inline" >{% trans "Workers" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp
 			<fieldset id="workergroup" style="display:inline"></fieldset></dd>
+			{% if mission.status == 'application' %}
 			<a type="button" style="display:table;margin-top:1%" class="button" data-toggle="modal" data-target="#WorkList">選擇接案人</a>
 			{% endif %}
+			{% endif %}
+			{% if user.is_authenticated %}
 			<dd>{% trans "Tender" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp <a href="{% url 'userena_profile_detail' mission.posted_by.username %}">{{mission.posted_by.username}}</a> </dd>
-			<dd>{% trans "Limit on the number" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp</dd>
-			<dd>{% trans "Status" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp</dd>
+			{% endif %}
+			<dd>{% trans "Limit on the number" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp{{mission.required_worker_num}}</dd>
+			<dd>{% trans "Status" %}&nbsp <i class="fa fa-angle-right"></i>  &nbsp
+				{% with mission.status as status %}
+				{% if status == 'application' %}
+				接受報名中
+				{% elif status == 'in_progress' %}
+				任務進行中
+				{% elif status == 'abandoned' %}
+				流案
+				{% elif status == 'completed' %}
+				完成
+				{% elif status == 'failed' %}
+				失敗
+				{% endif %}
+				{% endwith %}
+			</dd>
 		</div>
 		<!-- button casebutton-->
+
+
+
 		<ul class="actions align-center">
-			<li><a href="#" class="button special">{% trans "Case succese" %}</a></li>
-			<li><a href="#" class="button ">{% trans "Case fail" %}</a></li>
-			<li><a href="#" class="button special">{% trans "Access change" %}</a></li>
+			{% if mission.status == 'in_progress' %}
+			<form class="" method="post">
+				{% csrf_token %}
+				<input type="hidden" id="applied_hidden" name="success_hidden" value="{%for i in mission.applied_by.all %}{{i}},{%endfor%}">
+					<li><input class="button special" type="submit" value="{% trans "Case succese" %}"></li>
+			</form>
+			<form class="" method="post">
+				{% csrf_token %}
+					<input type="hidden" id="applied_hidden" name="fail_hidden" value="{%for i in mission.applied_by.all %}{{i}},{%endfor%}">
+					<li><input class="button" type="submit" value="{% trans "Case fail" %}"></li>
+			</form>
+			{% elif mission.status == 'application' %}
+			<form class="" method="post">
+				{% csrf_token %}
+			<input type="hidden" id="worker_hidden" name="worker_hidden" value="">
+			<li><input id="accessbtn" class="button" type="submit" value="{% trans "Access change" %}"></li>
+			</form>
+			{% endif %}
 		</ul>
 
-		{% include 'WorkerList.html' %}
+
+		{% if user.is_authenticated and user == mission.posted_by and mission.status == 'application' %}
+			{% include 'ManageWorkerList.html' %}
+		{% endif %}
 	</div>
 </div>
 {% endblock %}
@@ -66,7 +106,7 @@
 {% block FooterScript %}
 
 <link rel="stylesheet" href="{% static "assets/css/bootstrap.min.css"%}"/>
-<script src="{% static "assets/js/bootstrap.min.js"%}"/>
+
 <script src="{% static "assets/js/skel.min.js" %}"></script>
 <script src="{% static "assets/js/util.js" %}"></script>
 <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
@@ -75,7 +115,22 @@
 <script src="{% static "assets/js/dataTables.buttons.min.js"%}"></script>
 <script src="{% static "assets/js/CheckBoxTableInit.js" %}"></script>
 <script src="{% static "assets/js/selectfunc.js"%}"></script>
-
+<script src="{% static "assets/js/bootstrap.min.js"%}"/>
+<script src="{% static "assets/js/jquery.min.js"%}"></script>
+<script src="{% static "assets/js/jquery.redirect.js"%}"></script>
+{% if not mission.status == 'application' and not mission.status == 'abandoned' %}
+<script type="text/javascript">
+var target="_blank";
+var id=0;
+{%for i in mission.applied_by.all %}
+	$("<a"+" id=\"worker_"+ id + "\"target=\""+target+ "\"href=\"#\">&nbsp</a>").appendTo("#workergroup");
+	$("#worker_"+id).text("{{i}}");
+		$("#worker_"+id).attr("href","{% url 'userena_profile_detail' i %}" );
+	$("#worker_"+id).append("   ");
+	id++;
+{%endfor%}
+</script>
+{% endif %}
 <style media="screen">
 dd
 {
