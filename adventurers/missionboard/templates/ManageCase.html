@@ -8,6 +8,7 @@
 
 
 {% block content %}
+{% if user.is_authenticated %}
 <div id="main">
 	<div class="inner">
 			<div class="casebox box">
@@ -58,6 +59,14 @@
 	</div>
 </div>
 </div>
+{% else %}
+<div id="main">
+	<div class="inner">
+<h1>Please sign in.</h1>
+<a href="/accounts/signin/">Redirect to login page.</a>
+</div>
+</div>
+{% endif %}
 {% endblock %}
 
 

@@ -58,7 +58,7 @@
 
 					<!-- level -->
 					<p>等級需求 : {{form.required_level}}</p>
-
+					<p>人數需求 : {{form.required_worker_num }}</p>
 					<!-- datepicker -->
 					<p class="2u 12u(small)">報名截止日期:
 						{{form.application_deadline}}
@@ -95,7 +95,6 @@
 {% block FooterScript %}
 <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
 <link href="{% static "assets/css/jquery.simple-dtpicker.css" %}" rel="stylesheet">
-
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script src="{% static "assets/js/jquery.simple-dtpicker.js" %}"></script>

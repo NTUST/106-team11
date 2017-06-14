@@ -14,18 +14,18 @@
           {% for field in form %}
           {# Displaying checkboxes differently #}
           {% if field.name == 'remember_me' %}
-          <div class="6u 12u$(small)">
             <p>
             {{ field }}
             <label for="id_{{ field.name }}">{{ field.label }}</label>
             </p>
-          </div>
+            <br>
           {% else %}
           <div class="field">
             <p>
             {{ field.label_tag }}
             {{ field }}
             {{ field.errors }}
+            <br>
             </p>
           </div>
           {% endif %}
@@ -34,6 +34,7 @@
         <b style="color: red;">{{ form.non_field_errors }}</b>
           <input type="submit" value="{% trans "Signin" %}" />
         <br/>
+        <br>
         <p class="forgot-password">
           <a href="{% url 'userena_password_reset' %}"
              title="{% trans 'Forgot your password?' %}">
