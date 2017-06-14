@@ -75,7 +75,7 @@ def gen_missions_helper():
     app_date = fake.date_time_between(
         start_date="-14d", end_date="+7d", tzinfo=tz('Asia/Taipei'))
 
-    if app_date < timezone.now():
+    if app_date > timezone.now():
         status = 'application'
     else:
         status = 'in_progress'

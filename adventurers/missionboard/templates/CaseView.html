@@ -36,7 +36,16 @@
 			</label>
 			<label>等級下限: {{ m.required_level }}</label>
 			<label>人數需求: {{ m.required_worker_num }}</label>
+
+			{% if m.application_deadline|timeuntil:now != 0 %}
 			<label>截止報名: {{ m.application_deadline }}</label>
+			{% else %}
+			<label>截止報名:
+				<strong style="color:red;">{{ m.application_deadline }}</strong>
+			</label>
+			{% endif %}
+
+
 			<label>投案日: {{ m.posted_on }}</label>
 			<label>任務內容:</label><p>{{ m.description }}<p>
 		</div>
@@ -44,10 +53,9 @@
 		{% if user.is_authenticated %}
 		<!-- button casebutton-->
 		<ul class="actions align-center">
-<<<<<<< HEAD
 			{% if user == m.posted_by %}
 			{% elif user in m.applied_by.all %}
-				{% if m.application_deadline|timeuntil:now > 0 %}
+				{% if m.application_deadline|timeuntil:now != "0" %}
 				<li>
 					<form action="{% url 'missionboard_case_applied' m.id %}" method="post">
 						{% csrf_token %}
@@ -60,7 +68,7 @@
 				</li>
 				{% endif %}
 			{% elif user not in m.applied_by.all %}
-				{% if m.application_deadline|timeuntil:now > 0 %}
+				{% if m.application_deadline|timeuntil:now > "0" %}
 				<li>
 					<form action="{% url 'missionboard_case_applied' m.id %}" method="post">
 						{% csrf_token %}

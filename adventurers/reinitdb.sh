@@ -10,7 +10,7 @@ rm -v db.sqlite3
 source env/bin/activate
 python3 manage.py makemigrations
 python3 manage.py migrate
-python3 manage.py ckeck_permissions
+python3 manage.py check_permissions
 
 python3 gen_data.py
 
