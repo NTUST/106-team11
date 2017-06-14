@@ -52,7 +52,7 @@ def Managedetails(request, mission_id):
                     0].my_profile.missions_wip.remove(mission)
             Mission.objects.filter(id=mission.id).update(status='completed')
         elif 'fail_hidden' in request.POST and mission.status == 'in_progress':
-            userstr = request.POST.get('success_hidden')
+            userstr = request.POST.get('failed_hidden')
             userlist = userstr.split(',')[:-1]
             for i in userlist:
                 User.objects.filter(username=i)[
