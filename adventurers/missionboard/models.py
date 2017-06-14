@@ -51,15 +51,21 @@ class Mission(models.Model):
     register_user = models.ManyToManyField(
         User, related_name='register_application_user', blank=True, through='RegisterApplication')
     objects = MissionManager()
+
     def __str__(self):
         return self.name
 
+
 class RegisterApplication(models.Model):
-    register_user = models.ForeignKey(User,related_name='register_fk_user', on_delete=models.CASCADE)
-    mission = models.ForeignKey(Mission,related_name='register_fk_mission', on_delete=models.CASCADE)
+    register_user = models.ForeignKey(
+        User, related_name='register_fk_user', on_delete=models.CASCADE)
+    mission = models.ForeignKey(
+        Mission, related_name='register_fk_mission', on_delete=models.CASCADE)
     register_time_on = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.mission.name + ', ' + self.register_user.username
+
 
 class MissionApplication(models.Model):
     applied_by = models.ForeignKey(User, on_delete=models.CASCADE)

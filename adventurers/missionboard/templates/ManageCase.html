@@ -11,64 +11,64 @@
 {% if user.is_authenticated %}
 <div id="main">
 	<div class="inner">
-			<div class="casebox box">
-		<h1>你發表的任務</h1>
-		<table id="mainTable" class="display" cellspacing="0" width="100%">
-			<thead>
-				<tr>
-					<th>案名</th>
-					<th>需求技能</th>
-					<th>投案日</th>
-					<th>報名截止日</th>
-					<th>工作截止日</th>
-					<th>狀態</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for mission in Missions %}
-				<!-- 以下都為測試資料可以刪掉 -->
-				<tr>
-					<td><a href="{{ mission.id }}" title="">{{mission.name}}</a></td>
-					<td>
-						{% for s in mission.required_skills.all|dictsort:'name'  %}
-							{% if not forloop.last %}
-							<a href="{% url 'missionboard_category' s.id %}">{{s.name}}</a>,
-							{% else %}
-							<a href="{% url 'missionboard_category' s.id %}">{{s.name}}</a>
-							{% endif %}
-						{% endfor %}
-					</td>
-					<td>{{mission.posted_on}}</td>
-					<td>{{mission.application_deadline}}</td>
-					<td>{{mission.working_deadline}}</td>
+		<div class="casebox box">
+			<h1>你發表的任務</h1>
+			<table id="mainTable" class="display" cellspacing="0" width="100%">
+				<thead>
+					<tr>
+						<th>案名</th>
+						<th>需求技能</th>
+						<th>投案日</th>
+						<th>報名截止日</th>
+						<th>工作截止日</th>
+						<th>狀態</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for mission in Missions %}
+					<!-- 以下都為測試資料可以刪掉 -->
+					<tr>
+						<td><a href="{{ mission.id }}" title="">{{mission.name}}</a></td>
 						<td>
-					{% with mission.status as status%}
-					{% if status == 'application' %}
-					接受報名中
-					{% elif status == 'in_progress' %}
-					任務進行中
-					{% elif status == 'abandoned' %}
-					流案
-					{% elif status == 'completed' %}
-					完成
-					{% elif status == 'failed' %}
-					失敗
-					{% endif %}
-					{% endwith %}
-				</td>
-				</tr>
-	{% endfor %}
-			</tbody>
-		</table>
+							{% for s in mission.required_skills.all|dictsort:'name'  %}
+								{% if not forloop.last %}
+								<a href="{% url 'missionboard_category' s.id %}">{{s.name}}</a>,
+								{% else %}
+								<a href="{% url 'missionboard_category' s.id %}">{{s.name}}</a>
+								{% endif %}
+							{% endfor %}
+						</td>
+						<td>{{mission.posted_on}}</td>
+						<td>{{mission.application_deadline}}</td>
+						<td>{{mission.working_deadline}}</td>
+						<td>
+						{% with mission.status as status%}
+							{% if status == 'application' %}
+							接受報名中
+							{% elif status == 'in_progress' %}
+							任務進行中
+							{% elif status == 'abandoned' %}
+							流案
+							{% elif status == 'completed' %}
+							完成
+							{% elif status == 'failed' %}
+							失敗
+							{% endif %}
+						{% endwith %}
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 	</div>
-</div>
 </div>
 {% else %}
 <div id="main">
 	<div class="inner">
-<h1>Please sign in.</h1>
-<a href="/accounts/signin/">Redirect to login page.</a>
-</div>
+		<h1>Please sign in.</h1>
+		<a href="/accounts/signin/">Redirect to login page.</a>
+	</div>
 </div>
 {% endif %}
 {% endblock %}

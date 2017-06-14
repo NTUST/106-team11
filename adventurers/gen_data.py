@@ -102,12 +102,11 @@ def gen_missions_helper():
     m.required_skills.set(skill_list)
     m.save()
 
-    applied_user = []
     num = random.randint(2, 20)
     all_users = list(User.objects.all().exclude(username='AnonymousUser'))
 
     for x in random.sample(all_users, num):
-        ma = MissionApplication.objects.create(applied_by=x, mission=m)
+        ma = RegisterApplication.objects.create(register_user=x, mission=m)
         x.my_profile.missions_wip.add(ma.mission)
 
 
