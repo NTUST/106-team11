@@ -12,7 +12,7 @@
 <div id="main">
 	<div class="inner">
 			<div class="casebox box">
-		<h1>你發表的任務</h1>
+		<h1>正在參與的任務</h1>
 		<table id="mainTable" class="display" cellspacing="0" width="100%">
 			<thead>
 				<tr>
@@ -28,7 +28,7 @@
 				{% for mission in Missions %}
 				<!-- 以下都為測試資料可以刪掉 -->
 				<tr>
-					<td><a href="{{ mission.id }}" title="">{{mission.name}}</a></td>
+					<td><a href="{% url 'missionboard_details' mission.id %}" title="">{{mission.name}}</a></td>
 					<td>
 						{% for s in mission.required_skills.all|dictsort:'name'  %}
 							{% if not forloop.last %}
@@ -41,23 +41,23 @@
 					<td>{{mission.posted_on}}</td>
 					<td>{{mission.application_deadline}}</td>
 					<td>{{mission.working_deadline}}</td>
-						<td>
-					{% with mission.status as status%}
-					{% if status == 'application' %}
-					接受報名中
-					{% elif status == 'in_progress' %}
-					任務進行中
-					{% elif status == 'abandoned' %}
-					流案
-					{% elif status == 'completed' %}
-					完成
-					{% elif status == 'failed' %}
-					失敗
-					{% endif %}
-					{% endwith %}
-				</td>
+					<td>
+						{% with mission.status as status%}
+							{% if status == 'application' %}
+							接受報名中
+							{% elif status == 'in_progress' %}
+							任務進行中
+							{% elif status == 'abandoned' %}
+							流案
+							{% elif status == 'completed' %}
+							完成
+							{% elif status == 'failed' %}
+							失敗
+							{% endif %}
+						{% endwith %}
+					</td>
 				</tr>
-	{% endfor %}
+				{% endfor %}
 			</tbody>
 		</table>
 	</div>

@@ -12,15 +12,55 @@
 			</p>
 		</header>
 		<section class="tiles">
-			{% for c in skills %}
-			<article class={{c.style}}>
+
+			{% if user.is_authenticated %}
+			<article class="{{styles|random}}">
 				<span class="image">
-					<img src="{% static c.img %}" alt="" />
+					<img src="{% static images|random %}" alt="" />
 				</span>
-				<a href="{% url 'missionboard_category' c.id %}">
-					<h2>{{c.name}}</h2>
+				<a href="{% url 'missionboard_new_mission' %}">
+					<h2>發表新任務</h2>
 					<div class="content">
-						<p>{{c.description}}</p>
+						<p>招募各路英雄好漢打天下</p>
+					</div>
+				</a>
+			</article>
+
+			<article class="{{styles|random}}">
+				<span class="image">
+					<img src="{% static images|random %}" alt="" />
+				</span>
+				<a href="{% url 'missionboard_manage_case' %}">
+					<h2>你發表的任務</h2>
+					<div class="content">
+						<p>管理你發表的任務</p>
+					</div>
+				</a>
+			</article>
+
+			<article class="{{styles|random}}">
+				<span class="image">
+					<img src="{% static images|random %}" alt="" />
+				</span>
+				<a href="{% url 'missionboard_mission_wip' %}">
+					<h2>你參與的任務</h2>
+					<div class="content">
+						<p>正在參與的任務</p>
+					</div>
+				</a>
+			</article>
+			{% endif %}
+
+
+			{% for s in skills %}
+			<article class="{{styles|random}}">
+				<span class="image">
+					<img src="{% static images|random %}" alt="" />
+				</span>
+				<a href="{% url 'missionboard_category' s.id %}">
+					<h2>{{s.name}}</h2>
+					<div class="content">
+						<p>{{s.description}}</p>
 					</div>
 				</a>
 			</article>
