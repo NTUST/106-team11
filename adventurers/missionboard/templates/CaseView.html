@@ -6,10 +6,10 @@
 
 {% block HeaderScript %}
 <!--casebox class render-->
-<link rel="stylesheet" href="{% static "assets/css/CaseBox.css" %}" />
 <link rel="stylesheet" href="{% static "assets/css/jquery.dataTables.min.css" %}" />
 <link rel="stylesheet" href="{% static "assets/css/select.dataTables.min.css" %}" />
 <link rel="stylesheet" href="{% static "assets/css/buttons.dataTables.min.css" %}" />
+<link rel="stylesheet" href="{% static "assets/css/CaseBox.css" %}" />
 {% endblock %}
 
 
@@ -26,7 +26,7 @@
 			<label>投案人: {{m.posted_by.username}}</label>
 			{% endif %}
 			<label>需求技能:
-			{% for s in m.required_skills.all  %}
+			{% for s in m.required_skills.all|dictsort:'name'  %}
 				{% if not forloop.last %}
 				<a href="{% url 'missionboard_category' s.id %}">{{s.name}}</a>,
 				{% else %}
@@ -43,8 +43,21 @@
 		{% if user.is_authenticated %}
 		<!-- button casebutton-->
 		<ul class="actions align-center">
-			{% if user not in m.applied_by.all %}
-			<li><a href="{% url 'missionboard_case_applied' m.id %}" class="button special">接案</a></li>
+			{% if user == m.posted_by %}
+			{% elif user in m.applied_by.all %}
+			<li>
+				<form action="{% url 'missionboard_case_applied' m.id %}" method="post">
+					{% csrf_token %}
+					<input class="button special" type="submit" value="放棄">
+				</form>
+			</li>
+			{% elif user not in m.applied_by.all %}
+			<li>
+				<form action="{% url 'missionboard_case_applied' m.id %}" method="post">
+					{% csrf_token %}
+					<input class="button special" type="submit" value="接案">
+				</form>
+			</li>
 			{% endif %}
 		</ul>
 		{% endif %}
@@ -58,7 +71,15 @@
 
 
 {% block FooterScript %}
+<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 <script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script>
-<script src="{% static "assets/js/dataTables.select.min.js" %}"></script>
-<script src="{% static "assets/js/dataTables.buttons.min.js" %}"></script>
+<script src="{% static "assets/js/dataTables.select.min.js"%}"></script>
+<script src="{% static "assets/js/dataTables.buttons.min.js"%}"></script>
+<script>
+$(document).ready(function() {
+    $('#mainTable').DataTable({
+			"order": [[ 2, "desc" ]]
+		});
+} );
+</script>
 {% endblock %}
