@@ -138,7 +138,8 @@ def case_applied(request, mission_id):
 def mission_wip(request):
     user = get_user(request.user)
     Missions = Mission.objects.filter(
-        applied_by__in=[user], status='in_progress').order_by('posted_on')
+        register_user__in=[user], status='in_progress').order_by('posted_on')
+    print(Missions.count())
     context = {'Missions': Missions, 'user': user}
     return render_to_response('mission_wip.html', context)
 
