@@ -39,11 +39,17 @@ def details(request, mission_id):
     m = Mission.objects.get(id=mission_id)
     ma = RegisterApplication.objects.filter(mission=m)
 
+    has_applied = True if RegisterApplication.objects.filter(
+        mission=m, register_user=request.user).count() > 0 else False
+
+    before_app_deadline = True if m.application_deadline > timezone.now() else False
+
     context = {
         'user': get_user(request.user),
         'm': m,
         'ma': ma,
-        'now': timezone.now(),
+        'before_app_deadline': before_app_deadline,
+        'has_applied': has_applied,
     }
 
     return render(request, 'CaseView.html', context)
@@ -108,7 +114,7 @@ def case_applied(request, mission_id):
         m = Mission.objects.get(id=mission_id)
         ma_qset = RegisterApplication.objects.filter(
             register_user=request.user, mission=m)
-        if ma_qset.count() > 0 and m.application_deadline < timenow.now():
+        if ma_qset.count() > 0 and m.application_deadline > timezone.now():
             ma_qset.delete()
             request.user.my_profile.missions_wip.remove(m)
             context = {'user': request.user, 'm': m,
@@ -131,7 +137,8 @@ def case_applied(request, mission_id):
 @login_required
 def mission_wip(request):
     user = get_user(request.user)
-    Missions = Mission.objects.filter(applied_by__in=[user], status='in_progress').order_by('posted_on')
+    Missions = Mission.objects.filter(
+        applied_by__in=[user], status='in_progress').order_by('posted_on')
     context = {'Missions': Missions, 'user': user}
     return render_to_response('mission_wip.html', context)
 
@@ -165,7 +172,7 @@ def Managedetails(request, mission_id):
         elif request.POST.get('worker_hidden') != None and mission.status == 'application':
             userstr = request.POST.get('worker_hidden')
             userlist = userstr.split(',')
-            if len(userlist)>required_worker_num:
+            if len(userlist) > mission.required_worker_num:
                 return HttpResponseRedirect(mission_id)
             for i in userlist:
                 new_user = User.objects.filter(username=i).all()
@@ -177,7 +184,7 @@ def Managedetails(request, mission_id):
         elif 'success_hidden' in request.POST and mission.status == 'in_progress':
             userstr = request.POST.get('success_hidden')
             userlist = userstr.split(',')[:-1]
-            if len(userlist)>required_worker_num:
+            if len(userlist) > mission.required_worker_num:
                 return HttpResponseRedirect(mission_id)
             for i in userlist:
                 User.objects.filter(username=i)[
@@ -188,7 +195,7 @@ def Managedetails(request, mission_id):
         elif 'fail_hidden' in request.POST and mission.status == 'in_progress':
             userstr = request.POST.get('fail_hidden')
             userlist = userstr.split(',')[:-1]
-            if len(userlist)>required_worker_num:
+            if len(userlist) > mission.required_worker_num:
                 return HttpResponseRedirect(mission_id)
             for i in userlist:
                 User.objects.filter(username=i)[
